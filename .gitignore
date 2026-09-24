@@ -4,6 +4,7 @@ node_modules/
 .env*
 !.env.example
 *.tsbuildinfo
+next-env.d.ts
 artifacts/
 public/og/
 .DS_Store

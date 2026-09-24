@@ -2,6 +2,12 @@
 
 A photography-only portfolio built with Next.js App Router, React, TypeScript, and Tailwind. Identity: Nathan Tran / Nate / [@natexauto](https://www.instagram.com/natexauto/).
 
+Live placeholder site: https://photography-portfolio-website-chi.vercel.app
+
+Private repository: https://github.com/nathantran07/photography-portfolio-website
+
+Vercel project: https://vercel.com/nathan-tran-s-projects/photography-portfolio-website
+
 ## Local development
 
 Use Node 22 or newer and npm. On Windows PowerShell, use `npm.cmd` if execution policy blocks `npm.ps1`.
