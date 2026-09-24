@@ -42,6 +42,8 @@ Production HTTP inspection at https://photography-portfolio-website-chi.vercel.a
 - Every page has its expected absolute OG image URL and `noindex, nofollow` during placeholder work. Sitemap endpoint exists and is empty until indexing is enabled.
 - The same 640px image request returned AVIF for `Accept: image/avif`, WebP for `image/webp`, and JPEG for `image/jpeg`. All decoded to 640×400.
 
+GitHub integration was verified with a subsequent push to `feat/photography-portfolio`: Vercel built a Ready preview at https://photography-portfolio-website-git-1851e0-nathan-tran-s-projects.vercel.app/. It opens in the authenticated browser; anonymous requests redirect to Vercel authentication. `main` remains the production branch.
+
 ## Open items and limits
 
 - Real photographs, final bio wording, and email remain intentionally deferred. Instagram is **@natexauto** throughout.
@@ -80,7 +82,7 @@ All listed files are additions to the initially empty workspace. Text ranges cov
 | `components/portfolio-image.tsx` | 1–10 |
 | `components/theme-toggle.tsx` | 1–51 |
 | `content/portfolio.ts` | 1–101 |
-| `docs/HANDOFF.md` | 1–104 |
+| `docs/HANDOFF.md` | 1–106 |
 | `eslint.config.mjs` | 1–9 |
 | `lib/content-validation.ts` | 1–119 |
 | `lib/page-metadata.ts` | 1–12 |

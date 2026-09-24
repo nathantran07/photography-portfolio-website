@@ -10,7 +10,7 @@ function subscribe(callback: () => void): () => void {
   function syncPreference(): void {
     let saved: string | null = null;
     try { saved = localStorage.getItem("portfolio-theme"); } catch { /* Storage may be unavailable in private contexts. */ }
-    const chosen = saved === "light" || saved === "dark" ? saved : sessionChoice;
+    const chosen = sessionChoice ?? (saved === "light" || saved === "dark" ? saved : null);
     document.documentElement.dataset.theme = chosen ?? (preference.matches ? "dark" : "light");
     callback();
   }
