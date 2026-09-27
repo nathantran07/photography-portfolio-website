@@ -61,7 +61,7 @@ export function Header(): JSX.Element {
     // Replace that node at the mobile hero boundary; keep menu state and focus.
     <header key={pathname === "/" && mobileOverlay ? "hero" : "surface"} ref={attachHeader} className={`site-header${pathname === "/" ? " home-header" : ""}${pathname === "/" && overHero ? " over-hero" : ""}`} onKeyDown={(event): void => { if (event.key === "Escape" && open) { setOpen(false); menuButton.current?.focus(); } }}>
       <div className="header-inner shell">
-        <Link className="wordmark" href="/" onClick={(): void => setOpen(false)} aria-label="Nathan Tran — home">Nathan Tran<span className="wordmark-dot" aria-hidden="true">.</span></Link>
+        <span className="wordmark">Nathan Tran<span className="wordmark-dot" aria-hidden="true">.</span></span>
         <div className="header-actions">
           <nav className={`main-nav${open ? " is-open" : ""}`} id="main-navigation" aria-label="Main navigation">
             <SectionLink href="/#work" onClick={(): void => setOpen(false)}>Work</SectionLink>

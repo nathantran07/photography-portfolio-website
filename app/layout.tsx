@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { JSX, ReactNode } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import { homepageShare, site } from "@/content/portfolio";
 import { getSiteUrl, isIndexable } from "@/lib/site-url";
 import "./globals.css";
@@ -18,5 +19,5 @@ export const metadata: Metadata = {
 const themeScript = `(function(){var t;try{t=localStorage.getItem('portfolio-theme')}catch(e){}t=t==='dark'?'dark':'light';document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==='dark'?'#161816':'#f4f1ea'})()`;
 
 export default function RootLayout({ children }: { children: ReactNode }): JSX.Element {
-  return <html lang="en" suppressHydrationWarning><head><meta name="theme-color" content="#f4f1ea" suppressHydrationWarning /><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head><body><a className="skip-link" href="#main">Skip to content</a><Header />{children}<Footer /></body></html>;
+  return <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning><head><meta name="theme-color" content="#f4f1ea" suppressHydrationWarning /><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head><body><a className="skip-link" href="#main">Skip to content</a><Header />{children}<Footer /><ScrollToTop /></body></html>;
 }

@@ -16,7 +16,7 @@ export default function Home(): JSX.Element {
   const featured = site.featuredSlugs.map((slug) => getShoot(slug)).filter((shoot) => shoot !== undefined);
   const hero = getHero();
   return (
-    <main id="main">
+    <main id="main" tabIndex={-1}>
       <section className="home-hero" aria-labelledby="hero-heading" style={{ "--hero-position": `${hero.focalPoint?.x ?? 50}% ${hero.focalPoint?.y ?? 50}%` } as CSSProperties}>
         <PortfolioImage src={hero.src} alt={hero.alt} fill sizes={`max(100vw, ${(100 * hero.width / hero.height).toFixed(2)}svh)`} preload quality={85} className="home-hero-image" />
         <div className="home-hero-content entrance">

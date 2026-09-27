@@ -29,7 +29,7 @@ export default async function ShootPage({ params }: ShootPageProps): Promise<JSX
   const next = shoots.length > 1 ? shoots[(index + 1) % shoots.length] : undefined;
   const hasVideos = Boolean(shoot.videos?.length);
 
-  return <main id="main" className="shoot-page">
+  return <main id="main" className="shoot-page" tabIndex={-1}>
     <section className="shell shoot-intro" aria-labelledby="shoot-heading">
       <div className="shoot-breadcrumb"><Link className="text-link back-link" href="/#work"><ArrowIcon /> Work</Link><span className="eyebrow">Collection {String(index + 1).padStart(2, "0")}</span></div>
       <div className="shoot-cover-wrap entrance">
