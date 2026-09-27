@@ -37,7 +37,9 @@
 | `gallery/IMG_3271.JPG` | `03e06494168d87d0036f6b2fe1ed926c6afda1e1ff36f87faddb662279fa703f` | cnc24-3271 |
 | `gallery/IMG_3309.jpg` | `217fdf499fb7ae155161cdba45075de0d4c59dc96467189755dee86ec407fef0` | cnc24-3309 |
 
-## Display order
+## Import order (historical)
+
+The gallery has since been curated to alternate cars and details in its opening sequence. Current display order is the photo array in `content/portfolio.ts`; the list below records the import order, not the current viewer numbering. All 12 retained photos and the cover reference are unchanged.
 
 1. `cnc24-2659`: `/images/cars-n-copters-2024/huayra-bc-front.jpg`
 2. `cnc24-1006`: `/images/cars-n-copters-2024/chiron-helicopter-profile.jpg`

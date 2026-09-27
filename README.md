@@ -38,7 +38,18 @@ All portfolio content lives in `content/portfolio.ts`. Components do not need ed
 3. Add a `Shoot` record to `shoots` with a unique lowercase hyphenated `slug`, title, optional description, ordered `photos`, and `coverId` matching a photo ID. Optionally add a real calendar `date` in `YYYY-MM-DD` format and a nonempty `location` string. Omit unknown details. The slug `home` is reserved for the homepage share image.
 4. Every `Photo` needs `id`, `src` (beginning `/images/`), `width`, `height`, and a descriptive nonempty `alt`. Add a separate `caption` for real gallery photos: the confirmed model/variant and a short enthusiast detail or verified fact. Follow the writing standard in `AGENTS.md` and record factual sources in `docs/photo-imports/<shoot-slug>.md`. The viewer displays `caption`, falling back to `alt` for existing placeholders. Alt text still describes the visible subject for accessibility. Remove `placeholder: true` when replacing a development frame.
 5. Optionally set `focalPoint: { x: 50, y: 50 }`. Values range from 0 to 100, representing horizontal and vertical object positioning for cropped previews and share images. Full galleries and the enlarged viewer preserve the complete image.
-6. Set `site.featuredSlugs` to the desired homepage order. Set `site.hero` to an existing shoot slug and photo ID. Array order controls gallery and next-shoot order.
+6. Set `site.featuredSlugs` to the desired homepage order. Set `site.hero` to an existing shoot slug and photo ID. Array order controls gallery and next-shoot order. Gallery openings now alternate cars, wider views, and details before continuing with the remaining coverage. Reordering never requires renaming IDs or changing cover references.
+
+### Films and editing-only projects
+
+The homepage's compact films row is configured in `content/films.ts`. Each `FilmProject` has a title, Nathan's role, a footage credit, and a `Video` record. The first card reuses the two-Huracan collection video; the other three are editing-only projects. The identical Ferrari/BMW uploads are included once, with WhistlinDiesel credited only for the Ferrari opening and the BMW footage marked as unidentified.
+
+`FilmStrip` plays each film inline on the first click, with sound and native playback controls. Only one card plays at a time; unopened MP4s use `preload="none"`. Posters use the existing optimized image pipeline. No new dialog or extra play step is involved. The event galleries keep their existing viewer.
+
+Store intake projects in `photos+videos/edits/<project-name>/final/`, with an optional chosen frame in `cover/` and a `credits.txt` recording the title, footage creator, source link, and Nathan's role. These ignored local folders do not publish automatically. A cover is optional: extract a clean frame from the finished export when none is supplied. Keep originals intact, use `prepare:videos` for web exports, and add records to `content/films.ts`. Do not add editing-only projects to event galleries or credit Nathan with filming other people's footage. Unknown sources must stay identified as unknown.
+
+Build validation checks project IDs, roles, credits, duplicate homepage videos, and the same image/MP4 rules as collection videos. Record import evidence and poster timestamps in `docs/photo-imports/editing-projects.md`.
+
 7. Run the three verification commands above, review the changed pages in both themes, and push to GitHub.
 
 Example photo record:

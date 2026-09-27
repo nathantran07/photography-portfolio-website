@@ -63,6 +63,7 @@ export const site: SiteConfig = {
   shortName: "Nate",
   description: "Automotive photography and films by Nathan Tran. Hypercars, exceptional builds, and California’s car community.",
   instagram: { handle: "@natextran", url: "https://www.instagram.com/natextran/" },
+  email: "natextran@gmail.com",
   featuredSlugs: ["the-california-grand-tour-2026", "cars-n-copters-2025", "cars-n-copters-2024"],
   hero: { shootSlug: "the-california-grand-tour-2026", photoId: "cgt-0485" },
   heroImage: {
@@ -91,10 +92,52 @@ const californiaGrandTourPhotos: Photo[] = [
     focalPoint: { x: 50, y: 74 },
   },
   {
+    id: "cgt-0525", src: "/images/the-california-grand-tour-2026/mclaren-f1-gtr-three-quarter.jpg",
+    width: 2560, height: 3200,
+    alt: "Front three-quarter view of McLaren F1 GTR Longtail 23R, with its FINA-liveried nose and extended rear bodywork.",
+    caption: "F1 GTR Longtail 23R, campaigned by Schnitzer for BMW Motorsport. It also finished second at Sebring in 1997.",
+  },
+  {
+    id: "cgt-0548", src: "/images/the-california-grand-tour-2026/porsche-911-gt3-wheel.jpg",
+    width: 2400, height: 3200,
+    alt: "Multi-spoke front wheel, red brake caliper, and GT3 side script on the silver Porsche 911 GT3 (991.2).",
+    caption: "Multi-spoke wheels and GT3 side script on this silver 991.2.",
+  },
+  {
+    id: "cgt-0561", src: "/images/the-california-grand-tour-2026/toyota-supra-front.jpg",
+    width: 2560, height: 3200,
+    alt: "Low front three-quarter view of the pink Toyota GR Supra 3.0, with Liberty Walk widebody panels and LBWK lettering on the splitter.",
+    caption: "GR Supra 3.0. A turbocharged B58 straight-six under the hood, Liberty Walk bodywork around it.",
+  },
+  {
+    id: "cgt-0545-wide", src: "/images/the-california-grand-tour-2026/porsche-911-gt3-wide-composition.jpg",
+    width: 2133, height: 3200,
+    alt: "Wide composition of the silver Porsche 911 GT3 (991.2) parked outside IKEA, beside a red Chevrolet Corvette C8.",
+    caption: "991.2 GT3. The generation that brought the six-speed manual back as an alternative to PDK.",
+  },
+  {
     id: "cgt-0418", src: "/images/the-california-grand-tour-2026/mclaren-senna-cockpit.jpg",
     width: 2560, height: 3200,
     alt: "Carbon-fiber racing bucket seat and carbon-fiber steering wheel inside the McLaren Senna GTR.",
     caption: "Inside the Senna GTR: carbon-fiber racing buckets and a carbon-fiber, quick-release steering wheel.",
+  },
+  {
+    id: "cgt-0579", src: "/images/the-california-grand-tour-2026/toyota-supra-rear.jpg",
+    width: 2133, height: 3200,
+    alt: "Straight rear view of the pink Liberty Walk GR Supra 3.0, showing widened rear quarters, tall wing, and black diffuser.",
+    caption: "Liberty Walk GR Supra 3.0. Wide rear quarters and a GT-style wing, with air suspension bringing the whole car down.",
+  },
+  {
+    id: "cgt-0510", src: "/images/the-california-grand-tour-2026/mclaren-f1-gtr-front-detail.jpg",
+    width: 2560, height: 3200,
+    alt: "Front wheel and nose of McLaren F1 GTR Longtail chassis 23R in white, red, and blue FINA livery.",
+    caption: "McLaren F1 GTR Longtail, chassis 23R. One of ten Longtails built, and one of four run by BMW Motorsport in 1997.",
+  },
+  {
+    id: "cgt-0503", src: "/images/the-california-grand-tour-2026/mclaren-senna-front.jpg",
+    width: 2560, height: 3200,
+    alt: "White McLaren Senna GTR head-on, with a blue center stripe and orange trim along its carbon-fiber splitter.",
+    caption: "Senna GTR. Built for the track, without having to fit a racing rulebook.",
   },
   {
     id: "cgt-0428", src: "/images/the-california-grand-tour-2026/mclaren-senna-rear.jpg",
@@ -109,22 +152,10 @@ const californiaGrandTourPhotos: Photo[] = [
     caption: "McLaren Senna GTR. 814 bhp from a 4.0-liter twin-turbo V8.",
   },
   {
-    id: "cgt-0503", src: "/images/the-california-grand-tour-2026/mclaren-senna-front.jpg",
-    width: 2560, height: 3200,
-    alt: "White McLaren Senna GTR head-on, with a blue center stripe and orange trim along its carbon-fiber splitter.",
-    caption: "Senna GTR. Built for the track, without having to fit a racing rulebook.",
-  },
-  {
     id: "cgt-0507", src: "/images/the-california-grand-tour-2026/mclaren-senna-raised-door.jpg",
     width: 2560, height: 3200,
     alt: "Elevated front three-quarter view of the white McLaren Senna GTR and its exposed carbon-fiber hood.",
     caption: "Exposed carbon fiber across the white Senna GTR's hood.",
-  },
-  {
-    id: "cgt-0510", src: "/images/the-california-grand-tour-2026/mclaren-f1-gtr-front-detail.jpg",
-    width: 2560, height: 3200,
-    alt: "Front wheel and nose of McLaren F1 GTR Longtail chassis 23R in white, red, and blue FINA livery.",
-    caption: "McLaren F1 GTR Longtail, chassis 23R. One of ten Longtails built, and one of four run by BMW Motorsport in 1997.",
   },
   {
     id: "cgt-0520", src: "/images/the-california-grand-tour-2026/mclaren-f1-gtr-front.jpg",
@@ -133,34 +164,16 @@ const californiaGrandTourPhotos: Photo[] = [
     caption: "FINA BMW Motorsport livery on F1 GTR Longtail 23R. Peter Kox and Roberto Ravaglia drove it to victory at Silverstone in 1997.",
   },
   {
-    id: "cgt-0525", src: "/images/the-california-grand-tour-2026/mclaren-f1-gtr-three-quarter.jpg",
-    width: 2560, height: 3200,
-    alt: "Front three-quarter view of McLaren F1 GTR Longtail 23R, with its FINA-liveried nose and extended rear bodywork.",
-    caption: "F1 GTR Longtail 23R, campaigned by Schnitzer for BMW Motorsport. It also finished second at Sebring in 1997.",
-  },
-  {
     id: "cgt-0542", src: "/images/the-california-grand-tour-2026/porsche-911-gt3-front.jpg",
     width: 2400, height: 3200,
     alt: "Head-on view of a silver Porsche 911 GT3 (991.2), with a low front splitter and red tow strap.",
     caption: "Porsche 911 GT3 (991.2). A naturally aspirated 4.0-liter flat-six that revs to 9,000 rpm.",
   },
   {
-    id: "cgt-0545-wide", src: "/images/the-california-grand-tour-2026/porsche-911-gt3-wide-composition.jpg",
-    width: 2133, height: 3200,
-    alt: "Wide composition of the silver Porsche 911 GT3 (991.2) parked outside IKEA, beside a red Chevrolet Corvette C8.",
-    caption: "991.2 GT3. The generation that brought the six-speed manual back as an alternative to PDK.",
-  },
-  {
     id: "cgt-0545", src: "/images/the-california-grand-tour-2026/porsche-911-gt3-three-quarter.jpg",
     width: 2400, height: 3200,
     alt: "Close front three-quarter view of the silver Porsche 911 GT3 (991.2), with multi-spoke wheels and a fixed rear wing.",
     caption: "Porsche 991.2 GT3. Its 4.0-liter flat-six is closely related to the engine in the GT3 Cup race car.",
-  },
-  {
-    id: "cgt-0548", src: "/images/the-california-grand-tour-2026/porsche-911-gt3-wheel.jpg",
-    width: 2400, height: 3200,
-    alt: "Multi-spoke front wheel, red brake caliper, and GT3 side script on the silver Porsche 911 GT3 (991.2).",
-    caption: "Multi-spoke wheels and GT3 side script on this silver 991.2.",
   },
   {
     id: "cgt-0549", src: "/images/the-california-grand-tour-2026/toyota-supra-rear-three-quarter.jpg",
@@ -175,22 +188,10 @@ const californiaGrandTourPhotos: Photo[] = [
     caption: "Exposed-fastener overfenders on the Liberty Walk GR Supra, sitting low on bags.",
   },
   {
-    id: "cgt-0561", src: "/images/the-california-grand-tour-2026/toyota-supra-front.jpg",
-    width: 2560, height: 3200,
-    alt: "Low front three-quarter view of the pink Toyota GR Supra 3.0, with Liberty Walk widebody panels and LBWK lettering on the splitter.",
-    caption: "GR Supra 3.0. A turbocharged B58 straight-six under the hood, Liberty Walk bodywork around it.",
-  },
-  {
     id: "cgt-0569", src: "/images/the-california-grand-tour-2026/toyota-supra-rear-in-sunlight.jpg",
     width: 2560, height: 3200,
     alt: "Sunlit rear three-quarter view of the pink Liberty Walk GR Supra 3.0, with deep-dish Rohana wheels tucked under wide arches.",
     caption: "Toyota's A90 Supra shares its underlying platform with the BMW Z4.",
-  },
-  {
-    id: "cgt-0579", src: "/images/the-california-grand-tour-2026/toyota-supra-rear.jpg",
-    width: 2133, height: 3200,
-    alt: "Straight rear view of the pink Liberty Walk GR Supra 3.0, showing widened rear quarters, tall wing, and black diffuser.",
-    caption: "Liberty Walk GR Supra 3.0. Wide rear quarters and a GT-style wing, with air suspension bringing the whole car down.",
   },
 ];
 
@@ -207,6 +208,66 @@ const carsNCoptersPhotos: Photo[] = [
     width: 2400, height: 3200,
     alt: "Low front three-quarter view of the Koenigsegg Agera RS Draken, with white accents and red brake calipers.",
     caption: "Koenigsegg Agera RS Draken. White pinstriping follows the contours of its gray-tinted bodywork.",
+  },
+  {
+    id: "cnc-3276", src: "/images/cars-n-copters-2025/speedtail-cockpit.jpg",
+    width: 2400, height: 3200,
+    alt: "Central driving seat and steering wheel inside the McLaren Speedtail.",
+    caption: "McLaren Speedtail. The driver sits in the middle, with a passenger seat on either side, echoing the McLaren F1.",
+  },
+  {
+    id: "cnc-2149", src: "/images/cars-n-copters-2025/daytona-sp3-front.jpg",
+    width: 2400, height: 3200,
+    alt: "Front three-quarter view of a blue Ferrari Daytona SP3 with a white center stripe and number 22 roundels.",
+    caption: "Ferrari Daytona SP3. The white center stripe and number 22 roundels give this example a racing-livery feel.",
+  },
+  {
+    id: "cnc-3299", src: "/images/cars-n-copters-2025/revuelto-rear.jpg",
+    width: 2400, height: 3200,
+    alt: "Black Lamborghini Revuelto viewed from the rear three-quarter angle, with a rear wing and polished wheels.",
+    caption: "Lamborghini Revuelto. Polished wheels stand out against the dark bodywork and sharply cut rear quarters.",
+  },
+  {
+    id: "cnc-2027", src: "/images/cars-n-copters-2025/helicopter-cockpit.jpg",
+    width: 2400, height: 3200,
+    alt: "Helicopter cockpit with two seats, flight instruments, and a control stick.",
+    caption: "Inside the helicopter cockpit. Flight instruments and controls between the two seats.",
+  },
+  {
+    id: "cnc-2188", src: "/images/cars-n-copters-2025/centenario-rear.jpg",
+    width: 2400, height: 3200,
+    alt: "Rear three-quarter view of a Lamborghini Centenario with blue accents outlining its diffuser.",
+    caption: "Lamborghini Centenario. Blue accents trace the tall rear diffuser fins.",
+  },
+  {
+    id: "cnc-1988", src: "/images/cars-n-copters-2025/nissan-gtr-lineup.jpg",
+    width: 2400, height: 3200,
+    alt: "Purple Nissan GT-R R35 with a dark hood and low front splitter in the show lineup.",
+    caption: "Nissan GT-R R35. A deep front splitter and widened stance change the shape of the nose.",
+  },
+  {
+    id: "cnc-2163", src: "/images/cars-n-copters-2025/agera-final-editions.jpg",
+    width: 2400, height: 3200,
+    alt: "Rear wings and taillights of two Koenigsegg Ageras, with FE lettering on the nearest wing.",
+    caption: "Koenigsegg Agera Final Edition details. The FE cars received bespoke aerodynamic pieces at the end of the Agera line.",
+  },
+  {
+    id: "cnc-2014", src: "/images/cars-n-copters-2025/viper-profile.jpg",
+    width: 2400, height: 3200,
+    alt: "White Dodge Viper in Gold Rush Rally graphics, viewed in profile with a large rear wing.",
+    caption: "Dodge Viper in Gold Rush Rally livery. The long hood, side-exit exhaust, and oversized wing dominate its profile.",
+  },
+  {
+    id: "cnc-2036", src: "/images/cars-n-copters-2025/huracan-helicopter.jpg",
+    width: 2400, height: 3200,
+    alt: "Yellow Lamborghini Huracan parked beside a yellow helicopter.",
+    caption: "Lamborghini Huracan. The low wedge of the nose sits beneath the helicopter's skids.",
+  },
+  {
+    id: "cnc-2124", src: "/images/cars-n-copters-2025/ferrari-458-spider-rear.jpg",
+    width: 2400, height: 3200,
+    alt: "White Ferrari 458 Spider viewed from the rear, showing three central exhaust outlets.",
+    caption: "Ferrari 458 Spider. Three exhaust tips grouped in the center are a signature of the 458's rear end.",
   },
   {
     id: "cnc-3307", src: "/images/cars-n-copters-2025/agera-draken-profile.jpg",
@@ -245,18 +306,6 @@ const carsNCoptersPhotos: Photo[] = [
     caption: "BMW M3. Deep bucket seats with blue centers, yellow bolsters, and M-striped belts.",
   },
   {
-    id: "cnc-1988", src: "/images/cars-n-copters-2025/nissan-gtr-lineup.jpg",
-    width: 2400, height: 3200,
-    alt: "Purple Nissan GT-R R35 with a dark hood and low front splitter in the show lineup.",
-    caption: "Nissan GT-R R35. A deep front splitter and widened stance change the shape of the nose.",
-  },
-  {
-    id: "cnc-3299", src: "/images/cars-n-copters-2025/revuelto-rear.jpg",
-    width: 2400, height: 3200,
-    alt: "Black Lamborghini Revuelto viewed from the rear three-quarter angle, with a rear wing and polished wheels.",
-    caption: "Lamborghini Revuelto. Polished wheels stand out against the dark bodywork and sharply cut rear quarters.",
-  },
-  {
     id: "cnc-2307", src: "/images/cars-n-copters-2025/bmw-show-lineup.jpg",
     width: 2400, height: 3200,
     alt: "Black BMW with yellow headlight accents at the front of a supercar lineup.",
@@ -273,24 +322,6 @@ const carsNCoptersPhotos: Photo[] = [
     width: 2400, height: 3200,
     alt: "Red Audi R8 at the front of a row of sports cars along the beachfront.",
     caption: "Audi R8 at the front of the row. Its broad grille and side intakes keep the nose unmistakable.",
-  },
-  {
-    id: "cnc-2014", src: "/images/cars-n-copters-2025/viper-profile.jpg",
-    width: 2400, height: 3200,
-    alt: "White Dodge Viper in Gold Rush Rally graphics, viewed in profile with a large rear wing.",
-    caption: "Dodge Viper in Gold Rush Rally livery. The long hood, side-exit exhaust, and oversized wing dominate its profile.",
-  },
-  {
-    id: "cnc-2027", src: "/images/cars-n-copters-2025/helicopter-cockpit.jpg",
-    width: 2400, height: 3200,
-    alt: "Helicopter cockpit with two seats, flight instruments, and a control stick.",
-    caption: "Inside the helicopter cockpit. Flight instruments and controls between the two seats.",
-  },
-  {
-    id: "cnc-2036", src: "/images/cars-n-copters-2025/huracan-helicopter.jpg",
-    width: 2400, height: 3200,
-    alt: "Yellow Lamborghini Huracan parked beside a yellow helicopter.",
-    caption: "Lamborghini Huracan. The low wedge of the nose sits beneath the helicopter's skids.",
   },
   {
     id: "cnc-2049", src: "/images/cars-n-copters-2025/porsche-gt3-rs-helicopter.jpg",
@@ -329,22 +360,10 @@ const carsNCoptersPhotos: Photo[] = [
     caption: "Shelby Mustang. A Carroll Shelby signature across the dash, a three-spoke wheel, and an unexpected passenger.",
   },
   {
-    id: "cnc-3276", src: "/images/cars-n-copters-2025/speedtail-cockpit.jpg",
-    width: 2400, height: 3200,
-    alt: "Central driving seat and steering wheel inside the McLaren Speedtail.",
-    caption: "McLaren Speedtail. The driver sits in the middle, with a passenger seat on either side, echoing the McLaren F1.",
-  },
-  {
     id: "cnc-2122", src: "/images/cars-n-copters-2025/corvette-sheriff.jpg",
     width: 2400, height: 3200,
     alt: "Front quarter of a Chevrolet Corvette C6 wearing sheriff graphics, with its engine exposed.",
     caption: "Chevrolet Corvette C6 in sheriff livery. With the hood off, the plumbing is as much a part of the display as the bodywork.",
-  },
-  {
-    id: "cnc-2124", src: "/images/cars-n-copters-2025/ferrari-458-spider-rear.jpg",
-    width: 2400, height: 3200,
-    alt: "White Ferrari 458 Spider viewed from the rear, showing three central exhaust outlets.",
-    caption: "Ferrari 458 Spider. Three exhaust tips grouped in the center are a signature of the 458's rear end.",
   },
   {
     id: "cnc-2314", src: "/images/cars-n-copters-2025/ferrari-488-spider-cockpit.jpg",
@@ -395,12 +414,6 @@ const carsNCoptersPhotos: Photo[] = [
     caption: "Daytona SP3. A naturally aspirated 6.5-liter V12 sits behind the cockpit.",
   },
   {
-    id: "cnc-2149", src: "/images/cars-n-copters-2025/daytona-sp3-front.jpg",
-    width: 2400, height: 3200,
-    alt: "Front three-quarter view of a blue Ferrari Daytona SP3 with a white center stripe and number 22 roundels.",
-    caption: "Ferrari Daytona SP3. The white center stripe and number 22 roundels give this example a racing-livery feel.",
-  },
-  {
     id: "cnc-2151", src: "/images/cars-n-copters-2025/valkyrie-show-context.jpg",
     width: 2400, height: 3200,
     alt: "Silver Aston Martin Valkyrie viewed from behind beside a red helicopter.",
@@ -425,12 +438,6 @@ const carsNCoptersPhotos: Photo[] = [
     caption: "Koenigsegg Agera. The door rotates forward and upward, leaving the front wheel and sill in view.",
   },
   {
-    id: "cnc-2163", src: "/images/cars-n-copters-2025/agera-final-editions.jpg",
-    width: 2400, height: 3200,
-    alt: "Rear wings and taillights of two Koenigsegg Ageras, with FE lettering on the nearest wing.",
-    caption: "Koenigsegg Agera Final Edition details. The FE cars received bespoke aerodynamic pieces at the end of the Agera line.",
-  },
-  {
     id: "cnc-2294", src: "/images/cars-n-copters-2025/valkyrie-rear.jpg",
     width: 2096, height: 2794,
     alt: "Rear three-quarter view of the silver Aston Martin Valkyrie, with its diffuser and tail visible.",
@@ -447,12 +454,6 @@ const carsNCoptersPhotos: Photo[] = [
     width: 2323, height: 3097,
     alt: "Front three-quarter view of the silver Aston Martin Valkyrie with its low nose and open side channels.",
     caption: "Aston Martin Valkyrie. Its teardrop cockpit sits between the airflow tunnels that run along the floor.",
-  },
-  {
-    id: "cnc-2188", src: "/images/cars-n-copters-2025/centenario-rear.jpg",
-    width: 2400, height: 3200,
-    alt: "Rear three-quarter view of a Lamborghini Centenario with blue accents outlining its diffuser.",
-    caption: "Lamborghini Centenario. Blue accents trace the tall rear diffuser fins.",
   },
   {
     id: "cnc-2303", src: "/images/cars-n-copters-2025/speedtail-rear.jpg",
@@ -553,6 +554,20 @@ const carsNCoptersPhotos: Photo[] = [
 ];
 
 const carsNCoptersVideos: Video[] = [
+  {
+    id: "cnc-video-lambo-3-1-prob4", src: "/images/cars-n-copters-2025/video-posters/lambo-3-1-prob4.jpg",
+    videoSrc: "/videos/cars-n-copters-2025/lambo-3-1-prob4.mp4", duration: 11.566667,
+    width: 1080, height: 1920,
+    alt: "Two Lamborghini Huracans parked at the curb in Huntington Beach, shown in a short edit.",
+    caption: "Two Lamborghini Huracans at the curb in Huntington Beach. A short film of the cars and their details.",
+  },
+  {
+    id: "cnc-video-carsncops-3-1-prob4", src: "/images/cars-n-copters-2025/video-posters/carsncops-3-1-prob4.jpg",
+    videoSrc: "/videos/cars-n-copters-2025/carsncops-3-1-prob4.mp4", duration: 30.458,
+    width: 1080, height: 1920,
+    alt: "Edited highlights of supercars at Cars 'N Copters 2025.",
+    caption: "Cars 'N Copters 2025. A short edit from the beachfront lineup.",
+  },
   {
     id: "cnc-video-img-1989", src: "/images/cars-n-copters-2025/video-posters/img-1989.jpg",
     videoSrc: "/videos/cars-n-copters-2025/img-1989.mp4", duration: 20.841,
@@ -735,20 +750,6 @@ const carsNCoptersVideos: Video[] = [
     alt: "Orange Mk4 Toyota Supra with sweeping side graphics at the show.",
     caption: "Mk4 Toyota Supra. Orange paint and sweeping side graphics recall the Supra from The Fast and the Furious.",
   },
-  {
-    id: "cnc-video-lambo-3-1-prob4", src: "/images/cars-n-copters-2025/video-posters/lambo-3-1-prob4.jpg",
-    videoSrc: "/videos/cars-n-copters-2025/lambo-3-1-prob4.mp4", duration: 11.566667,
-    width: 1080, height: 1920,
-    alt: "Edited sequence of Lamborghini bodywork and engine-cover details.",
-    caption: "Lamborghini details, cut together into a short film.",
-  },
-  {
-    id: "cnc-video-carsncops-3-1-prob4", src: "/images/cars-n-copters-2025/video-posters/carsncops-3-1-prob4.jpg",
-    videoSrc: "/videos/cars-n-copters-2025/carsncops-3-1-prob4.mp4", duration: 30.458,
-    width: 1080, height: 1920,
-    alt: "Edited highlights of supercars at Cars 'N Copters 2025.",
-    caption: "Cars 'N Copters 2025. A short edit from the beachfront lineup.",
-  },
 ];
 
 const carsNCopters2024Photos: Photo[] = [
@@ -760,52 +761,16 @@ const carsNCopters2024Photos: Photo[] = [
     focalPoint: { x: 50, y: 67 },
   },
   {
+    id: "cnc24-3309", src: "/images/cars-n-copters-2024/mclaren-diablo-pair.jpg",
+    width: 2400, height: 3200,
+    alt: "Exposed-carbon McLaren 765LT Spider with turquoise accents beside a yellow Lamborghini Murcielago.",
+    caption: "McLaren 765LT Spider beside a Lamborghini Murcielago. Exposed carbon and turquoise alongside bright yellow.",
+  },
+  {
     id: "cnc24-1006", src: "/images/cars-n-copters-2024/chiron-helicopter-profile.jpg",
     width: 2400, height: 3200,
     alt: "Rear quarter of a two-tone Bugatti Chiron beside a helicopter.",
     caption: "Bugatti Chiron. The sweeping C-shaped side line wraps around the cabin and into the air intake.",
-  },
-  {
-    id: "cnc24-1194", src: "/images/cars-n-copters-2024/revuelto-front.jpg",
-    width: 2400, height: 3200,
-    alt: "Matte-dark Lamborghini Revuelto viewed from the front three-quarter angle with its door open.",
-    caption: "Lamborghini Revuelto. Y-shaped lights trace the edges of its angular nose.",
-  },
-  {
-    id: "cnc24-1289", src: "/images/cars-n-copters-2024/mclaren-rear-lineup.jpg",
-    width: 2400, height: 3200,
-    alt: "Rear view along a lineup of two Lamborghini Aventador SVJs, a blue McLaren, and a Ferrari.",
-    caption: "Two Lamborghini Aventador SVJs lead the lineup, their fixed rear wings ahead of a blue McLaren and a Ferrari.",
-  },
-  {
-    id: "cnc24-1355", src: "/images/cars-n-copters-2024/mclaren-spider-tails.jpg",
-    width: 2400, height: 3200,
-    alt: "Rear quarter of a white McLaren Spider beside other McLarens.",
-    caption: "McLaren Spider. The raised rear wing sits above the deep openings across the tail.",
-  },
-  {
-    id: "cnc24-1959", src: "/images/cars-n-copters-2024/chiron-nose.jpg",
-    width: 2400, height: 3200,
-    alt: "Silver Bugatti Chiron nose with a number 16 grille beside a helicopter.",
-    caption: "Bugatti Chiron. The number 16 fills its horseshoe grille.",
-  },
-  {
-    id: "cnc24-2658", src: "/images/cars-n-copters-2024/huayra-blue-front.jpg",
-    width: 2400, height: 3200,
-    alt: "Blue Pagani Huayra viewed from a low front angle, with gold wheels.",
-    caption: "Pagani Huayra. Blue bodywork and gold wheels frame the separate headlight pods and low nose.",
-  },
-  {
-    id: "cnc24-2660", src: "/images/cars-n-copters-2024/zonda-rear.jpg",
-    width: 2400, height: 3200,
-    alt: "Rear of the Pagani Zonda AY with purple accents, a large wing, and four central exhaust outlets.",
-    caption: "Pagani Zonda AY. Purple details pick out the wing supports, taillights, and four-pipe exhaust surround.",
-  },
-  {
-    id: "cnc24-2662", src: "/images/cars-n-copters-2024/huayra-front-quarter.jpg",
-    width: 2400, height: 3200,
-    alt: "Blue Pagani Huayra front quarter and gold wheel, with a green Pagani behind it.",
-    caption: "Pagani Huayra. A closer look at the front wheel, small mirror stalk, and sculpted fender.",
   },
   {
     id: "cnc24-3269", src: "/images/cars-n-copters-2024/mclaren-cockpit.jpg",
@@ -820,10 +785,46 @@ const carsNCopters2024Photos: Photo[] = [
     caption: "McLaren 720S with Liberty Walk bodywork. A vented hood, widened arches, and a deep splitter reshape the front end.",
   },
   {
-    id: "cnc24-3309", src: "/images/cars-n-copters-2024/mclaren-diablo-pair.jpg",
+    id: "cnc24-2660", src: "/images/cars-n-copters-2024/zonda-rear.jpg",
     width: 2400, height: 3200,
-    alt: "Exposed-carbon McLaren 765LT Spider with turquoise accents beside a yellow Lamborghini Murcielago.",
-    caption: "McLaren 765LT Spider beside a Lamborghini Murcielago. Exposed carbon and turquoise alongside bright yellow.",
+    alt: "Rear of the Pagani Zonda AY with purple accents, a large wing, and four central exhaust outlets.",
+    caption: "Pagani Zonda AY. Purple details pick out the wing supports, taillights, and four-pipe exhaust surround.",
+  },
+  {
+    id: "cnc24-1289", src: "/images/cars-n-copters-2024/mclaren-rear-lineup.jpg",
+    width: 2400, height: 3200,
+    alt: "Rear view along a lineup of two Lamborghini Aventador SVJs, a blue McLaren, and a Ferrari.",
+    caption: "Two Lamborghini Aventador SVJs lead the lineup, their fixed rear wings ahead of a blue McLaren and a Ferrari.",
+  },
+  {
+    id: "cnc24-1194", src: "/images/cars-n-copters-2024/revuelto-front.jpg",
+    width: 2400, height: 3200,
+    alt: "Matte-dark Lamborghini Revuelto viewed from the front three-quarter angle with its door open.",
+    caption: "Lamborghini Revuelto. Y-shaped lights trace the edges of its angular nose.",
+  },
+  {
+    id: "cnc24-1959", src: "/images/cars-n-copters-2024/chiron-nose.jpg",
+    width: 2400, height: 3200,
+    alt: "Silver Bugatti Chiron nose with a number 16 grille beside a helicopter.",
+    caption: "Bugatti Chiron. The number 16 fills its horseshoe grille.",
+  },
+  {
+    id: "cnc24-2658", src: "/images/cars-n-copters-2024/huayra-blue-front.jpg",
+    width: 2400, height: 3200,
+    alt: "Blue Pagani Huayra viewed from a low front angle, with gold wheels.",
+    caption: "Pagani Huayra. Blue bodywork and gold wheels frame the separate headlight pods and low nose.",
+  },
+  {
+    id: "cnc24-1355", src: "/images/cars-n-copters-2024/mclaren-spider-tails.jpg",
+    width: 2400, height: 3200,
+    alt: "Rear quarter of a white McLaren Spider beside other McLarens.",
+    caption: "McLaren Spider. The raised rear wing sits above the deep openings across the tail.",
+  },
+  {
+    id: "cnc24-2662", src: "/images/cars-n-copters-2024/huayra-front-quarter.jpg",
+    width: 2400, height: 3200,
+    alt: "Blue Pagani Huayra front quarter and gold wheel, with a green Pagani behind it.",
+    caption: "Pagani Huayra. A closer look at the front wheel, small mirror stalk, and sculpted fender.",
   },
 ];
 

@@ -2,9 +2,10 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { getGalleryItems, shoots, site, type Photo } from "../content/portfolio";
+import { filmProjects } from "../content/films";
 import { resolvePublicAsset } from "../lib/content-validation";
 
-const photos = [...shoots.flatMap(getGalleryItems), site.heroImage, site.headshot]
+const photos = [...shoots.flatMap(getGalleryItems), ...filmProjects.map((project) => project.video), site.heroImage, site.headshot]
   .filter((photo): photo is Photo => photo !== undefined);
 const sources = [...new Set(photos.map((photo): string => photo.src))].sort();
 const previews: Record<string, string> = {};

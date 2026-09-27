@@ -46,7 +46,7 @@ export async function resolvePublicAsset(src: unknown, publicRoot: string): Prom
   return actual;
 }
 
-export async function validateContent(site: unknown, shoots: unknown, publicRoot = path.resolve("public")): Promise<string[]> {
+export async function validateContent(site: unknown, shoots: unknown, publicRoot = path.resolve("public"), films: unknown = []): Promise<string[]> {
   const errors: string[] = [];
   const fail = (location: string, message: string): void => { errors.push(`${location}: ${message}`); };
   async function validatePhoto(photo: RecordValue, photoLocation: string): Promise<void> {
@@ -71,6 +71,24 @@ export async function validateContent(site: unknown, shoots: unknown, publicRoot
       else if (isDimension(photo.width) && isDimension(photo.height) && (width !== photo.width || height !== photo.height)) fail(photoLocation, `declares ${photo.width}x${photo.height}, but image is ${width}x${height} after orientation`);
     } catch (error) {
       fail(`${photoLocation}.src`, error instanceof Error ? error.message : String(error));
+    }
+  }
+  async function validateVideoFile(video: RecordValue, videoLocation: string): Promise<void> {
+    if (video.caption === undefined) fail(`${videoLocation}.caption`, "must be a non-empty, non-whitespace string");
+    if (typeof video.duration !== "number" || !Number.isFinite(video.duration) || video.duration <= 0) fail(`${videoLocation}.duration`, "must be a finite positive number of seconds");
+    try {
+      const asset = await resolvePublicAsset(video.videoSrc, publicRoot);
+      if (!/\.mp4$/i.test(String(video.videoSrc))) fail(`${videoLocation}.videoSrc`, "must be an MP4 file");
+      const file = await open(asset, "r");
+      try {
+        const header = Buffer.alloc(12);
+        const { bytesRead } = await file.read(header, 0, header.length, 0);
+        if (bytesRead < 12 || header.toString("ascii", 4, 8) !== "ftyp") fail(`${videoLocation}.videoSrc`, "must contain an MP4 file header");
+        const bytes = (await file.stat()).size;
+        if (bytes <= 32 || bytes >= 100 * 1024 * 1024) fail(`${videoLocation}.videoSrc`, "must be nonempty and smaller than 100 MiB");
+      } finally { await file.close(); }
+    } catch (error) {
+      fail(`${videoLocation}.videoSrc`, error instanceof Error ? error.message : String(error));
     }
   }
   if (!Array.isArray(shoots)) return ["shoots: must be an array"];
@@ -118,22 +136,7 @@ export async function validateContent(site: unknown, shoots: unknown, publicRoot
             if (mediaIds.has(video.id)) fail(`${videoLocation}.id`, `duplicate media ID "${video.id}" in this shoot`);
             mediaIds.add(video.id);
           }
-          if (video.caption === undefined) fail(`${videoLocation}.caption`, "must be a non-empty, non-whitespace string");
-          if (typeof video.duration !== "number" || !Number.isFinite(video.duration) || video.duration <= 0) fail(`${videoLocation}.duration`, "must be a finite positive number of seconds");
-          try {
-            const asset = await resolvePublicAsset(video.videoSrc, publicRoot);
-            if (!/\.mp4$/i.test(String(video.videoSrc))) fail(`${videoLocation}.videoSrc`, "must be an MP4 file");
-            const file = await open(asset, "r");
-            try {
-              const header = Buffer.alloc(12);
-              const { bytesRead } = await file.read(header, 0, header.length, 0);
-              if (bytesRead < 12 || header.toString("ascii", 4, 8) !== "ftyp") fail(`${videoLocation}.videoSrc`, "must contain an MP4 file header");
-              const bytes = (await file.stat()).size;
-              if (bytes <= 32 || bytes >= 100 * 1024 * 1024) fail(`${videoLocation}.videoSrc`, "must be nonempty and smaller than 100 MiB");
-            } finally { await file.close(); }
-          } catch (error) {
-            fail(`${videoLocation}.videoSrc`, error instanceof Error ? error.message : String(error));
-          }
+          await validateVideoFile(video, videoLocation);
         }
       }
     }
@@ -164,6 +167,28 @@ export async function validateContent(site: unknown, shoots: unknown, publicRoot
     const photoIds = typeof site.hero.shootSlug === "string" ? photoIdsBySlug.get(site.hero.shootSlug) : undefined;
     if (!photoIds) fail("site.hero.shootSlug", `does not resolve to a shoot: ${String(site.hero.shootSlug)}`);
     if (typeof site.hero.photoId !== "string" || !photoIds?.has(site.hero.photoId)) fail("site.hero.photoId", `does not resolve to a photo in the hero shoot: ${String(site.hero.photoId)}`);
+  }
+  const filmIds = new Set<string>();
+  const filmSources = new Set<string>();
+  if (!Array.isArray(films)) fail("films", "must be an array");
+  else for (const [index, film] of films.entries()) {
+    const location = `films[${index}]`;
+    if (!isRecord(film)) { fail(location, "must be an object"); continue; }
+    for (const field of ["id", "title", "footageCredit"] as const) {
+      if (!isText(film[field])) fail(`${location}.${field}`, "must be a non-empty string");
+    }
+    if (isText(film.id)) {
+      if (filmIds.has(film.id)) fail(`${location}.id`, "duplicate film project ID");
+      filmIds.add(film.id);
+    }
+    if (film.role !== "Editing" && film.role !== "Filming & editing") fail(`${location}.role`, "must be Editing or Filming & editing");
+    if (!isRecord(film.video)) { fail(`${location}.video`, "must be a video object"); continue; }
+    if (isText(film.video.videoSrc)) {
+      if (filmSources.has(film.video.videoSrc)) fail(`${location}.video.videoSrc`, "duplicate homepage film");
+      filmSources.add(film.video.videoSrc);
+    }
+    await validatePhoto(film.video, `${location}.video`);
+    await validateVideoFile(film.video, `${location}.video`);
   }
   return errors;
 }

@@ -10,6 +10,8 @@
 
 ## Nathan's caption corrections
 
+- `cnc-video-lambo-3-1-prob4`: Nathan identified this as his edit of two Lamborghini Huracans parked beside the road and selected it as the initial homepage feature. Poster review confirms the pair. The feature credits his filming and editing once, and the two finished edits now precede the camera clips in the collection. IDs and media files are unchanged; array order in `content/portfolio.ts` is authoritative.
+
 - `cnc-video-img-2021`: Nathan confirmed the passing order: Lamborghini Aventador, Lamborghini Huracan, then Porsche 911 GT3 RS. Caption and alt describe the complete sequence rather than just the Porsche.
 - `cnc-video-img-2053`: Nathan confirmed a Koenigsegg, Ford GT, McLaren Speedtail, then another Koenigsegg. The original Centenario identification was incorrect for this clip. Koenigsegg subvariants remain unspecified; other Centenario records are unaffected.
 - `cnc-video-img-2136`: Nathan confirmed **Lamborghini Aventador SV**; caption and alt now specify the trim.
