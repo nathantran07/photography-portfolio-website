@@ -1,4 +1,4 @@
-import { realpath, stat } from "node:fs/promises";
+import { open, realpath, stat } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -10,6 +10,12 @@ function isRecord(value: unknown): value is RecordValue {
 
 function isText(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
+}
+
+function isCalendarDate(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00.000Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
 }
 
 function isDimension(value: unknown): value is number {
@@ -43,6 +49,30 @@ export async function resolvePublicAsset(src: unknown, publicRoot: string): Prom
 export async function validateContent(site: unknown, shoots: unknown, publicRoot = path.resolve("public")): Promise<string[]> {
   const errors: string[] = [];
   const fail = (location: string, message: string): void => { errors.push(`${location}: ${message}`); };
+  async function validatePhoto(photo: RecordValue, photoLocation: string): Promise<void> {
+    if (!isText(photo.id)) fail(`${photoLocation}.id`, "must be a non-empty string");
+    if (!isText(photo.alt)) fail(`${photoLocation}.alt`, "must be a non-empty, non-whitespace string");
+    if (photo.caption !== undefined && !isText(photo.caption)) fail(`${photoLocation}.caption`, "must be a non-empty, non-whitespace string when supplied");
+    if (!isDimension(photo.width)) fail(`${photoLocation}.width`, "must be a positive integer");
+    if (!isDimension(photo.height)) fail(`${photoLocation}.height`, "must be a positive integer");
+    if (photo.focalPoint !== undefined) {
+      if (!isRecord(photo.focalPoint)) fail(`${photoLocation}.focalPoint`, "must contain x and y percentages");
+      else for (const axis of ["x", "y"] as const) {
+        const value = photo.focalPoint[axis];
+        if (typeof value !== "number" || !Number.isFinite(value) || value < 0 || value > 100) fail(`${photoLocation}.focalPoint.${axis}`, "must be a finite number from 0 to 100");
+      }
+    }
+    try {
+      const asset = await resolvePublicAsset(photo.src, publicRoot);
+      const metadata = await sharp(asset).metadata();
+      const width = metadata.autoOrient?.width ?? metadata.width;
+      const height = metadata.autoOrient?.height ?? metadata.height;
+      if (!width || !height) fail(`${photoLocation}.src`, "must be a readable image with dimensions");
+      else if (isDimension(photo.width) && isDimension(photo.height) && (width !== photo.width || height !== photo.height)) fail(photoLocation, `declares ${photo.width}x${photo.height}, but image is ${width}x${height} after orientation`);
+    } catch (error) {
+      fail(`${photoLocation}.src`, error instanceof Error ? error.message : String(error));
+    }
+  }
   if (!Array.isArray(shoots)) return ["shoots: must be an array"];
   const seenSlugs = new Set<string>();
   const photoIdsBySlug = new Map<string, Set<string>>();
@@ -57,6 +87,8 @@ export async function validateContent(site: unknown, shoots: unknown, publicRoot
       seenSlugs.add(shoot.slug);
     }
     if (!isText(shoot.title)) fail(`${location}.title`, "must be a non-empty string");
+    if ("date" in shoot && !isCalendarDate(shoot.date)) fail(`${location}.date`, "must be a real calendar date in YYYY-MM-DD format");
+    if ("location" in shoot && !isText(shoot.location)) fail(`${location}.location`, "must be a non-empty, non-whitespace string");
     const photoIds = new Set<string>();
     if (isText(shoot.slug)) photoIdsBySlug.set(shoot.slug, photoIds);
     if (!Array.isArray(shoot.photos) || shoot.photos.length === 0) {
@@ -65,34 +97,46 @@ export async function validateContent(site: unknown, shoots: unknown, publicRoot
       for (const [photoIndex, photo] of shoot.photos.entries()) {
         const photoLocation = `${location}.photos[${photoIndex}]`;
         if (!isRecord(photo)) { fail(photoLocation, "must be an object"); continue; }
-        if (!isText(photo.id)) fail(`${photoLocation}.id`, "must be a non-empty string");
-        else {
+        if ("videoSrc" in photo) fail(photoLocation, "video records belong in this shoot's videos array");
+        if (isText(photo.id)) {
           if (photoIds.has(photo.id)) fail(`${photoLocation}.id`, `duplicate photo ID "${photo.id}" in this shoot`);
           photoIds.add(photo.id);
         }
-        if (!isText(photo.alt)) fail(`${photoLocation}.alt`, "must be a non-empty, non-whitespace string");
-        if (!isDimension(photo.width)) fail(`${photoLocation}.width`, "must be a positive integer");
-        if (!isDimension(photo.height)) fail(`${photoLocation}.height`, "must be a positive integer");
-        if (photo.focalPoint !== undefined) {
-          if (!isRecord(photo.focalPoint)) fail(`${photoLocation}.focalPoint`, "must contain x and y percentages");
-          else for (const axis of ["x", "y"] as const) {
-            const value = photo.focalPoint[axis];
-            if (typeof value !== "number" || !Number.isFinite(value) || value < 0 || value > 100) fail(`${photoLocation}.focalPoint.${axis}`, "must be a finite number from 0 to 100");
-          }
-        }
-        try {
-          const asset = await resolvePublicAsset(photo.src, publicRoot);
-          const metadata = await sharp(asset).metadata();
-          const width = metadata.autoOrient?.width ?? metadata.width;
-          const height = metadata.autoOrient?.height ?? metadata.height;
-          if (!width || !height) fail(`${photoLocation}.src`, "must be a readable image with dimensions");
-          else if (isDimension(photo.width) && isDimension(photo.height) && (width !== photo.width || height !== photo.height)) fail(photoLocation, `declares ${photo.width}x${photo.height}, but image is ${width}x${height} after orientation`);
-        } catch (error) {
-          fail(`${photoLocation}.src`, error instanceof Error ? error.message : String(error));
-        }
+        await validatePhoto(photo, photoLocation);
       }
     }
     if (!isText(shoot.coverId) || !photoIds.has(shoot.coverId)) fail(`${location}.coverId`, `does not resolve to a photo in this shoot: ${String(shoot.coverId)}`);
+    if (shoot.videos !== undefined) {
+      if (!Array.isArray(shoot.videos)) fail(`${location}.videos`, "must be an array when supplied");
+      else {
+        const mediaIds = new Set(photoIds);
+        for (const [videoIndex, video] of shoot.videos.entries()) {
+          const videoLocation = `${location}.videos[${videoIndex}]`;
+          if (!isRecord(video)) { fail(videoLocation, "must be an object"); continue; }
+          await validatePhoto(video, videoLocation);
+          if (isText(video.id)) {
+            if (mediaIds.has(video.id)) fail(`${videoLocation}.id`, `duplicate media ID "${video.id}" in this shoot`);
+            mediaIds.add(video.id);
+          }
+          if (video.caption === undefined) fail(`${videoLocation}.caption`, "must be a non-empty, non-whitespace string");
+          if (typeof video.duration !== "number" || !Number.isFinite(video.duration) || video.duration <= 0) fail(`${videoLocation}.duration`, "must be a finite positive number of seconds");
+          try {
+            const asset = await resolvePublicAsset(video.videoSrc, publicRoot);
+            if (!/\.mp4$/i.test(String(video.videoSrc))) fail(`${videoLocation}.videoSrc`, "must be an MP4 file");
+            const file = await open(asset, "r");
+            try {
+              const header = Buffer.alloc(12);
+              const { bytesRead } = await file.read(header, 0, header.length, 0);
+              if (bytesRead < 12 || header.toString("ascii", 4, 8) !== "ftyp") fail(`${videoLocation}.videoSrc`, "must contain an MP4 file header");
+              const bytes = (await file.stat()).size;
+              if (bytes <= 32 || bytes >= 100 * 1024 * 1024) fail(`${videoLocation}.videoSrc`, "must be nonempty and smaller than 100 MiB");
+            } finally { await file.close(); }
+          } catch (error) {
+            fail(`${videoLocation}.videoSrc`, error instanceof Error ? error.message : String(error));
+          }
+        }
+      }
+    }
     if (shoot.ogImage !== undefined) {
       try {
         const asset = await resolvePublicAsset(shoot.ogImage, publicRoot);
@@ -105,6 +149,12 @@ export async function validateContent(site: unknown, shoots: unknown, publicRoot
     }
   }
   if (!isRecord(site)) { fail("site", "must be an object"); return errors; }
+  for (const field of ["heroImage", "headshot"] as const) {
+    if (field in site) {
+      if (!isRecord(site[field])) fail(`site.${field}`, "must be a photo object");
+      else await validatePhoto(site[field], `site.${field}`);
+    }
+  }
   if (!Array.isArray(site.featuredSlugs)) fail("site.featuredSlugs", "must be an array");
   else site.featuredSlugs.forEach((slug: unknown, index: number): void => {
     if (typeof slug !== "string" || !seenSlugs.has(slug)) fail(`site.featuredSlugs[${index}]`, `does not resolve to a shoot: ${String(slug)}`);

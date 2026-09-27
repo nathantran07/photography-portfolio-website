@@ -1,6 +1,6 @@
 # Nathan Tran — Automotive Photography
 
-A photography-only portfolio built with Next.js App Router, React, TypeScript, and Tailwind. Identity: Nathan Tran / Nate / [@natexauto](https://www.instagram.com/natexauto/).
+A photography and film portfolio built with Next.js App Router, React, TypeScript, and Tailwind. Identity: Nathan Tran / Nate / [@natextran](https://www.instagram.com/natextran/).
 
 Live placeholder site: https://photography-portfolio-website-chi.vercel.app
 
@@ -35,8 +35,8 @@ All portfolio content lives in `content/portfolio.ts`. Components do not need ed
 
 1. Export web-ready JPGs in the sRGB color space. Bake orientation into the exported pixels. Keep original/full-resolution files outside this repository.
 2. Add exports under `public/images/<shoot-slug>/`. Use descriptive lowercase filenames. Record their actual pixel width and height.
-3. Add a `Shoot` record to `shoots` with a unique lowercase hyphenated `slug`, title, optional description, ordered `photos`, and `coverId` matching a photo ID. The slug `home` is reserved for the homepage share image.
-4. Every `Photo` needs `id`, `src` (beginning `/images/`), `width`, `height`, and a descriptive nonempty `alt`. Remove `placeholder: true` when replacing a development frame. Describe the actual visible subject; do not repeat keywords or leave the alt as a filename.
+3. Add a `Shoot` record to `shoots` with a unique lowercase hyphenated `slug`, title, optional description, ordered `photos`, and `coverId` matching a photo ID. Optionally add a real calendar `date` in `YYYY-MM-DD` format and a nonempty `location` string. Omit unknown details. The slug `home` is reserved for the homepage share image.
+4. Every `Photo` needs `id`, `src` (beginning `/images/`), `width`, `height`, and a descriptive nonempty `alt`. Add a separate `caption` for real gallery photos: the confirmed model/variant and a short enthusiast detail or verified fact. Follow the writing standard in `AGENTS.md` and record factual sources in `docs/photo-imports/<shoot-slug>.md`. The viewer displays `caption`, falling back to `alt` for existing placeholders. Alt text still describes the visible subject for accessibility. Remove `placeholder: true` when replacing a development frame.
 5. Optionally set `focalPoint: { x: 50, y: 50 }`. Values range from 0 to 100, representing horizontal and vertical object positioning for cropped previews and share images. Full galleries and the enlarged viewer preserve the complete image.
 6. Set `site.featuredSlugs` to the desired homepage order. Set `site.hero` to an existing shoot slug and photo ID. Array order controls gallery and next-shoot order.
 7. Run the three verification commands above, review the changed pages in both themes, and push to GitHub.
@@ -50,17 +50,57 @@ Example photo record:
   width: 2400,
   height: 1600,
   alt: "Describe the car, angle, and setting actually visible in this photograph.",
+  caption: "Name the confirmed model and add one verified fact or specific build detail.",
   focalPoint: { x: 50, y: 50 },
 }
 ```
 
-Alt text is required both by TypeScript and runtime build validation. Duplicate slugs, duplicate photo IDs within a shoot, missing assets, invalid/mismatched dimensions, unsafe paths, empty galleries, broken references, and invalid focal points fail with record-specific errors.
+Illustrative optional shoot fields only; replace these sample details with confirmed information for the actual shoot:
+
+```ts
+date: "2024-02-29",
+location: "Example venue, Example city",
+```
+
+Dates display in English (for example, February 29, 2024) using UTC so the day stays consistent across time zones. Existing placeholder collections intentionally omit dates and locations.
+
+Alt text is required both by TypeScript and runtime build validation. Captions are optional in the type so placeholders and homepage-only photos remain valid; any supplied caption must be a nonempty string. Duplicate slugs, duplicate photo IDs within a shoot, missing assets, invalid/mismatched dimensions, unsafe paths, empty galleries, broken references, invalid focal points, malformed or impossible dates, and empty or non-string locations or captions fail with record-specific errors.
+
+### Image loading
+
+`npm run dev` and `npm run build` generate tiny embedded previews for every configured photo in `content/image-previews.json`. Commit that generated file with photo changes. If you add or replace photos while the development server is already running, run `npm run generate:image-previews` to refresh it. The shared `PortfolioImage` component shows these previews immediately while `next/image` loads the responsive, optimized image. Full-resolution sources and the quality setting are unchanged.
+
+The enlarged viewer's responsive sizes account for both screen width and the photo's height-constrained display area. This avoids requesting a full-width image for a narrow portrait. Offscreen gallery photos stay lazy-loaded; AVIF and WebP remain enabled. Vercel caches optimized variants after they are requested, so a first uncached request can still take longer than a cached one. Check production loading on a Vercel preview before launch.
+
+### Adding videos
+
+Keep originals in the collection's ignored `video-gallery/` intake folder. With FFmpeg and ffprobe installed, run:
+
+```sh
+npm run prepare:videos -- "photos+videos/collections/collection-02 (carsncops 25)/video-gallery" cars-n-copters-2025
+```
+
+The offline script creates oriented H.264/AAC MP4 copies under `public/videos/<slug>/` and JPEG posters under `public/images/<slug>/video-posters/`. It fits within 1920x1080 (1080x1920 portrait), exports 30fps with quality 19 and a 10 Mbps video ceiling, preserves audio at 192 kbps, strips source metadata, and moves the MP4 index to the front for progressive playback. HDR sources require separate color review and are rejected. Originals are untouched. `--nvenc` uses an installed compatible NVIDIA GPU; omit it for software encoding. `--resume` reuses completed files from an existing source-hash manifest under `artifacts/video-imports/`.
+
+Finish asset generation before updating live content. Add `Video` records to the optional `Shoot.videos` array in `content/portfolio.ts`: `id`, poster `src`, poster `width`/`height`, visual `alt`, visible `caption`, MP4 `videoSrc`, and `duration` in seconds. The same `src`/dimensions structure lets `PhotoFrame`, the proportional gallery layout, and `next/image` handle posters consistently. Covers and OG images still reference real photos. Photos appear first, followed by videos in their array order; the gallery offers a Jump to films link.
+
+Video files do not load on the collection page. The viewer mounts one native player with `preload="none"`; visitors start playback using its controls. Closing or navigating away unmounts and pauses the player. Video controls keep their native keyboard behavior; gallery swipes apply only to photographs. Playback errors offer a retry. Review clips for meaningful speech and provide synchronized captions before publishing spoken content.
+
+Run lint, typecheck, and build, then manually check playback, seeking, volume, fullscreen, mobile layout, and the unchanged photo viewer. Build validation checks video IDs, captions, duration, poster dimensions, MP4 headers/files, and the 100 MiB per-file ceiling. Codecs, audio preservation, duration, and orientation are checked during offline import; browser playback remains a manual gate. Commit the MP4s, posters, content, and regenerated `content/image-previews.json` together. Video hosting/bandwidth must also be checked on a Vercel preview before production release.
+
+### Homepage photographs
+
+The opening image fills an edge-to-edge hero exactly 100svh tall, with overlay navigation and a "View work" link to the Work section. Its current 50%/72% focal point keeps a narrow margin below the front lip to retain more of the rear wing on wide screens. Regular scrolling moves the image immediately; there is no pinned hero or scroll snapping. Phone layouts also use a cover crop, without side bars. Responsive image sizes account for viewport width and screen height. Homepage navigation becomes opaque after leaving the image; shoot-page navigation keeps its standard layout.
+
+Optional `site.heroImage` and `site.headshot` accept complete `Photo` records with required alt text and dimensions. `heroImage` overrides the existing collection-based hero reference without adding a homepage-only photo to a shoot. Removing it restores `site.hero` as the fallback. The headshot appears in the About section when supplied. These records run through the same build validation as gallery photos. Current trial exports live under `public/images/home/`; untouched intake files remain in the ignored `photos+videos/` folder.
+
+The About section keeps its numbered label aligned with Contact. Its heading and bio share the left column; the portrait sits on the right so Nathan's gaze faces the copy. The frame grows to 420px including its border and inset, with responsive image sizes matching the available column. Below 761px, the text precedes a centered portrait. If no headshot is supplied, the text spans the layout.
 
 ### Share images
 
 Every share image is a local 1200×630 JPEG generated at build time:
 
-- `/og/home.jpg`: dedicated Nathan Tran / Automotive Photography / @natexauto artwork.
+- `/og/home.jpg`: dedicated Nathan Tran / Automotive Photography / @natextran artwork.
 - `/og/<slug>.jpg`: the shoot cover cropped at its focal point, with shoot title and branding.
 - To override a shoot image, add a finished 1200×630 JPG/PNG under `public/images/share/` and set `shoot.ogImage` to its `/images/share/...` path. Do not point overrides into generated `/og/` outputs; they do not exist on a clean clone.
 
@@ -74,7 +114,7 @@ Edit `site.name`, `site.shortName`, and `site.instagram` for content settings. T
 
 - Cormorant Garamond is for display headings only, never below 20px. The `.display` class controls it. Manrope handles body copy, captions, navigation, buttons, and UI labels.
 - Both fonts are locally served with `font-display: swap` and serif/sans-serif fallback stacks in `app/globals.css`.
-- Theme initialization runs before page content renders. Explicit selection is saved locally; otherwise the system theme is followed. Blocked storage does not prevent toggling.
+- Theme initialization runs before page content renders. Light is the default, regardless of system theme. Explicit light/dark selections are saved locally. Blocked storage does not prevent toggling.
 - Reduced-motion preferences disable entrance animations, smooth scrolling, and transitions.
 - Native modal dialogs provide viewer focus containment and Escape behavior. Close restores the triggering gallery button; arrow keys wrap through photos. A single-photo gallery hides directional controls.
 
@@ -99,7 +139,7 @@ Edit `site.name`, `site.shortName`, and `site.instagram` for content settings. T
 - Confirm malformed content makes the build fail, restore it, and obtain passing lint/typecheck/build.
 - Before public launch: replace placeholder content, review actual crops, alt text, color fidelity, loading performance, contact links, and Vercel preview.
 
-Photography is v1. There is no video player, video content, or video schema. Site settings, shoot metadata, and photo records are separate so a future release can add fields without restructuring the current content.
+The original photography-only scope was expanded with Nathan's approval to include self-hosted gallery videos. Site configuration, shoot metadata, photos, and optional videos remain separate. Production deployment still requires a preview review.
 
 ## Font licenses
 

@@ -6,12 +6,11 @@ const themeEvent = "portfolio-theme-change";
 let sessionChoice: "light" | "dark" | null = null;
 
 function subscribe(callback: () => void): () => void {
-  const preference = window.matchMedia("(prefers-color-scheme: dark)");
   function syncPreference(): void {
     let saved: string | null = null;
     try { saved = localStorage.getItem("portfolio-theme"); } catch { /* Storage may be unavailable in private contexts. */ }
     const chosen = sessionChoice ?? (saved === "light" || saved === "dark" ? saved : null);
-    document.documentElement.dataset.theme = chosen ?? (preference.matches ? "dark" : "light");
+    document.documentElement.dataset.theme = chosen ?? "light";
     callback();
   }
   function onStorage(event: StorageEvent): void {
@@ -21,11 +20,9 @@ function subscribe(callback: () => void): () => void {
   }
   window.addEventListener(themeEvent, callback);
   window.addEventListener("storage", onStorage);
-  preference.addEventListener("change", syncPreference);
   return (): void => {
     window.removeEventListener(themeEvent, callback);
     window.removeEventListener("storage", onStorage);
-    preference.removeEventListener("change", syncPreference);
   };
 }
 

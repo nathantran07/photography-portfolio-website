@@ -6,5 +6,6 @@ node_modules/
 *.tsbuildinfo
 next-env.d.ts
 artifacts/
+photos+videos/
 public/og/
 .DS_Store

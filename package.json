@@ -4,15 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "tsx scripts/generate-image-previews.ts",
     "dev": "next dev --hostname 127.0.0.1",
-    "prebuild": "tsx scripts/validate-content.ts && tsx scripts/generate-og.ts",
+    "prebuild": "tsx scripts/validate-content.ts && tsx scripts/generate-image-previews.ts && tsx scripts/generate-og.ts",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "validate:content": "tsx scripts/validate-content.ts",
+    "generate:image-previews": "tsx scripts/generate-image-previews.ts",
     "generate:og": "tsx scripts/generate-og.ts",
-    "generate:placeholders": "tsx scripts/generate-placeholders.ts"
+    "generate:placeholders": "tsx scripts/generate-placeholders.ts",
+    "prepare:videos": "tsx scripts/prepare-videos.ts"
   },
   "engines": {
     "node": ">=22.0.0"

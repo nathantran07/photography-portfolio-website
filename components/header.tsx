@@ -1,20 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState, type JSX } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, type JSX } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header(): JSX.Element {
   const [open, setOpen] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
+  const pathname = usePathname();
+  const header = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
 
+  useEffect((): (() => void) | undefined => {
+    if (pathname !== "/") return;
+    const hero = document.querySelector(".home-hero");
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]): void => setHeroVisible(entry.isIntersecting), { rootMargin: `-${header.current?.offsetHeight ?? 89}px 0px 0px 0px` });
+    observer.observe(hero);
+    return (): void => observer.disconnect();
+  }, [pathname]);
+
   return (
-    <header className="site-header" onKeyDown={(event): void => { if (event.key === "Escape" && open) { setOpen(false); menuButton.current?.focus(); } }}>
+    <header ref={header} className={`site-header${pathname === "/" ? " home-header" : ""}${pathname === "/" && heroVisible ? " over-hero" : ""}`} onKeyDown={(event): void => { if (event.key === "Escape" && open) { setOpen(false); menuButton.current?.focus(); } }}>
       <div className="header-inner shell">
         <Link className="wordmark" href="/" onClick={(): void => setOpen(false)} aria-label="Nathan Tran — home">Nathan Tran<span className="wordmark-dot" aria-hidden="true">.</span></Link>
         <div className="header-actions">
           <nav className={`main-nav${open ? " is-open" : ""}`} id="main-navigation" aria-label="Main navigation">
-            <Link href="/#work" onClick={(): void => setOpen(false)}>Selected work</Link>
+            <Link href="/#work" onClick={(): void => setOpen(false)}>Work</Link>
             <Link href="/#about" onClick={(): void => setOpen(false)}>About</Link>
             <Link href="/#contact" onClick={(): void => setOpen(false)}>Get in touch <span aria-hidden="true">↗</span></Link>
           </nav>
