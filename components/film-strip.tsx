@@ -57,7 +57,12 @@ export function FilmStrip({ projects }: { projects: FilmProject[] }): JSX.Elemen
     const bounds = element.getBoundingClientRect();
     const cards = Array.from(element.children);
     const maxScroll = element.scrollWidth - element.clientWidth;
-    const closest = cards.reduce((best, card, index): number => Math.abs(card.getBoundingClientRect().left - bounds.left) < Math.abs(cards[best].getBoundingClientRect().left - bounds.left) ? index : best, 0);
+    const center = bounds.left + bounds.width / 2;
+    const distance = (card: Element): number => {
+      const cardBounds = card.getBoundingClientRect();
+      return Math.abs(cardBounds.left + cardBounds.width / 2 - center);
+    };
+    const closest = cards.reduce((best, card, index): number => distance(card) < distance(cards[best]) ? index : best, 0);
     setActiveIndex(maxScroll <= 1 ? 0 : element.scrollLeft >= maxScroll - 1 ? Math.max(0, cards.length - 1) : closest);
     const player = activePlayer.current;
     if (player && !player.paused) {
@@ -79,7 +84,9 @@ export function FilmStrip({ projects }: { projects: FilmProject[] }): JSX.Elemen
     const card = element?.children[nextIndex];
     if (!element || !card) return;
     activePlayer.current?.pause();
-    element.scrollTo({ left: element.scrollLeft + card.getBoundingClientRect().left - element.getBoundingClientRect().left, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+    const bounds = element.getBoundingClientRect();
+    const cardBounds = card.getBoundingClientRect();
+    element.scrollTo({ left: element.scrollLeft + cardBounds.left + cardBounds.width / 2 - bounds.left - bounds.width / 2, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   }
   function activate(player: HTMLVideoElement): void {
     if (activePlayer.current !== player) activePlayer.current?.pause();

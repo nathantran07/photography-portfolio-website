@@ -115,9 +115,9 @@ p { line-height: 1.85; }
 .film-error { position: absolute; inset: 12px 12px auto; z-index: 2; margin: 0; padding: 10px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); font-size: 12px; pointer-events: none; }
 @media (min-width: 761px) and (max-width: 1000px) { .films-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .film-card:nth-child(n+3) { margin-top: 28px; } }
 @media (max-width: 760px) {
-  .films-grid { grid-template-columns: none; grid-template-rows: repeat(5, auto); grid-auto-flow: column; grid-auto-columns: min(84%, 320px); column-gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; padding-block: 8px; margin-block: -8px; }
+  .films-grid { grid-template-columns: none; grid-template-rows: repeat(5, auto); grid-auto-flow: column; grid-auto-columns: 100%; column-gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; padding-block: 8px; margin-block: -8px; }
   .films-grid::-webkit-scrollbar { display: none; }
-  .film-card { scroll-snap-align: start; }
+  .film-card { width: min(84%, 320px); justify-self: center; scroll-snap-align: center; }
   .film-collection { min-height: 44px; }
   .films-navigation { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; }
   .film-swipe-hint { font-size: 10px; color: var(--muted); }
