@@ -265,7 +265,11 @@ body:has(dialog[open]) .scroll-to-top { opacity: 0; visibility: hidden; pointer-
   .shell { --shell-gutter: 20px; } .header-inner { height: 72px; } .wordmark { font-size: 12px; } .header-actions { gap: 6px; } .nav-divider { display: none; } .mobile-menu { display: inline-flex; }
   .main-nav { display: none; position: absolute; top: 100%; left: 0; right: 0; padding: 16px max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px)); background: var(--bg); border-bottom: 1px solid var(--line); flex-direction: column; align-items: stretch; gap: 0; }
   .main-nav.is-open { display: flex; } .main-nav a { padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
-  .over-hero .main-nav.is-open { color: var(--fg); }
+  .site-header:has(.main-nav.is-open) { background: var(--bg); color: var(--fg); backdrop-filter: none; border-color: var(--line); transition: none; }
+  .site-header:has(.main-nav.is-open) .wordmark-dot { color: var(--gold); }
+  .site-header:has(.main-nav.is-open) .icon-button:hover { border-color: var(--line); }
+  .site-header:has(.main-nav.is-open) :focus-visible { outline-color: var(--gold); }
+  .site-header:has(.main-nav.is-open) .main-nav a:hover { color: var(--gold); }
   .home-hero::after { inset: 10px; }
   .home-hero-content { left: max(24px, env(safe-area-inset-left, 0px)); right: max(24px, env(safe-area-inset-right, 0px)); bottom: max(42px, calc(env(safe-area-inset-bottom, 0px) + 16px)); }
   .home-hero-content > .eyebrow { font-size: 9px; }
