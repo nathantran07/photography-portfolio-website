@@ -149,7 +149,7 @@ body:has(dialog[open]) .scroll-to-top { opacity: 0; visibility: hidden; pointer-
 .project-caption { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 22px; }
 .project-category { font-size: 9px; color: var(--muted); }
 .project-title { font-size: 36px; margin: 8px 0 0; }
-.project-arrow { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 50%; transition: color 200ms, background 200ms; }
+.project-arrow { width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 50%; transition: color 200ms, background 200ms; }
 .project-card:hover .project-arrow { color: var(--bg); background: var(--fg); }
 .about-section { background: radial-gradient(ellipse at 78% 55%, var(--halo), transparent 65%), var(--surface); border-block: 1px solid var(--line); }
 .about-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: 100px; margin-top: 40px; }
