@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header(): JSX.Element {
   const [open, setOpen] = useState(false);
-  const [heroVisible, setHeroVisible] = useState(true);
+  const [overHero, setOverHero] = useState(true);
   const pathname = usePathname();
   const SectionLink = pathname === "/" ? "a" : Link;
   const header = useRef<HTMLElement>(null);
@@ -17,13 +17,33 @@ export function Header(): JSX.Element {
     if (pathname !== "/") return;
     const hero = document.querySelector(".home-hero");
     if (!hero) return;
-    const observer = new IntersectionObserver(([entry]): void => setHeroVisible(entry.isIntersecting), { rootMargin: `-${header.current?.offsetHeight ?? 89}px 0px 0px 0px` });
+    const mobileHeader = window.matchMedia("(max-width: 760px), (hover: none) and (pointer: coarse)");
+    const headerHeight = header.current?.offsetHeight ?? 89;
+    let heroIntersects = hero.getBoundingClientRect().bottom > headerHeight;
+    function updateHeader(): void {
+      // On touch screens, avoid a transparent fixed header over the mixed hero/content state.
+      setOverHero(mobileHeader.matches ? window.scrollY <= 8 : heroIntersects);
+    }
+    function onScroll(): void {
+      if (mobileHeader.matches) updateHeader();
+    }
+    const observer = new IntersectionObserver(([entry]): void => {
+      heroIntersects = entry.isIntersecting;
+      updateHeader();
+    }, { rootMargin: `-${headerHeight}px 0px 0px 0px` });
     observer.observe(hero);
-    return (): void => observer.disconnect();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    mobileHeader.addEventListener("change", updateHeader);
+    updateHeader();
+    return (): void => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      mobileHeader.removeEventListener("change", updateHeader);
+    };
   }, [pathname]);
 
   return (
-    <header ref={header} className={`site-header${pathname === "/" ? " home-header" : ""}${pathname === "/" && heroVisible ? " over-hero" : ""}`} onKeyDown={(event): void => { if (event.key === "Escape" && open) { setOpen(false); menuButton.current?.focus(); } }}>
+    <header ref={header} className={`site-header${pathname === "/" ? " home-header" : ""}${pathname === "/" && overHero ? " over-hero" : ""}`} onKeyDown={(event): void => { if (event.key === "Escape" && open) { setOpen(false); menuButton.current?.focus(); } }}>
       <div className="header-inner shell">
         <Link className="wordmark" href="/" onClick={(): void => setOpen(false)} aria-label="Nathan Tran — home">Nathan Tran<span className="wordmark-dot" aria-hidden="true">.</span></Link>
         <div className="header-actions">
