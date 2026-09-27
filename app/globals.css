@@ -37,6 +37,8 @@ p { line-height: 1.85; }
 /* Give mobile browser tinting a solid color instead of a blended, animated layer. */
 @media (max-width: 760px), (hover: none) and (pointer: coarse) {
   .site-header:not(.over-hero) { background: var(--bg); backdrop-filter: none; transition: none; }
+  /* At the opening, avoid a transparent fixed layer that Safari can retain for browser tinting. */
+  .home-header.over-hero { position: absolute; transition: none; }
 }
 .over-hero .wordmark-dot { color: #e5c998; }
 .over-hero .nav-divider { background: rgb(255 255 255 / 30%); }
