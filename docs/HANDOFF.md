@@ -1,5 +1,17 @@
 # Claude handoff
 
+## Photography and film share preview - 2026-09-26
+
+**TASK SUMMARY:** Replace the plain homepage share card with the approved Senna GTR photograph and position the portfolio as Automotive Photography & Film.
+
+**FILES MODIFIED:** `content/portfolio.ts` lines 64 and 80-84 (description and `homepageShare`); `scripts/generate-og.ts` lines 1-4, 12, 18-22, 43-59, 77, and 91-95 (`generateHome`, font selection, mixed-media shoot label); `app/layout.tsx` lines 5 and 11-15; `app/page.tsx` lines 7 and 10; `lib/page-metadata.ts` line 8; `README.md` lines 103-111; new `public/fonts/CormorantGaramond-Variable.ttf` and `public/fonts/OFL-CormorantGaramond.txt`; this entry. Generated OG JPEGs remain ignored and are rebuilt in CI.
+
+**IMPLEMENTATION:** Full-bleed 1200x630 Senna GTR crop with localized shading, 88px Cormorant Garamond name and 26px Manrope Photography & Film label. The share crop is independent of the homepage hero. Central homepage sharing metadata provides the new descriptive alt and image URL; Open Graph and Twitter titles/descriptions match. Keep `/og/home.jpg` as an identical compatibility copy. The existing photo composition and caption data are untouched. Bundle the Google Fonts Cormorant Garamond TTF and OFL license for deterministic build-time rendering; no package dependency was added.
+
+**VERIFICATION:** `npm run lint`, `npm run typecheck`, `npm run build`, and `git diff --check` passed. Reviewed the generated graphic at full resolution and in a 400px browser viewport; restored normal viewport afterward. Local crawler-user-agent response contains the new title, description, absolute image URL, 1200x630 dimensions, descriptive alt and matching Twitter large-image metadata. Image HTTP 200; Sharp confirms JPEG dimensions; legacy copy is byte-identical.
+
+**OPEN ITEMS:** Nathan authorized committing and publishing the completed preview. Actual messaging-platform unfurl has not been retested. Earlier navigation fixes are already live in commits `72e92dd` and `3c0ab62`.
+
 ## Homepage portrait previews - 2026-09-26
 
 **TASK SUMMARY:** Implement the approved wide first collection followed by paired portrait previews for collections 2 and 3.

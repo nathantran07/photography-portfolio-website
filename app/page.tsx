@@ -4,10 +4,10 @@ import Link from "next/link";
 import { ArrowIcon, ExternalIcon } from "@/components/icons";
 import { PhotoFrame } from "@/components/photo-frame";
 import { PortfolioImage } from "@/components/portfolio-image";
-import { getCover, getHero, getShoot, isPlaceholderShoot, site } from "@/content/portfolio";
+import { getCover, getHero, getShoot, homepageShare, isPlaceholderShoot, site } from "@/content/portfolio";
 import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = pageMetadata({ title: "Nathan Tran — Automotive Photography", description: site.description, path: "/", image: "/og/home.jpg", imageAlt: `Nathan Tran — Automotive Photography — ${site.instagram.handle}` });
+export const metadata: Metadata = pageMetadata({ title: homepageShare.title, description: site.description, path: "/", image: homepageShare.image, imageAlt: homepageShare.alt });
 
 export default function Home(): JSX.Element {
   const featured = site.featuredSlugs.map((slug) => getShoot(slug)).filter((shoot) => shoot !== undefined);

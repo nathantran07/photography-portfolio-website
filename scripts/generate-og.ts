@@ -1,7 +1,7 @@
-import { access, mkdir } from "node:fs/promises";
+import { access, mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp, { type OverlayOptions } from "sharp";
-import { getCover, shoots, site, type Photo } from "../content/portfolio";
+import { getCover, getHero, homepageShare, shoots, site, type Photo } from "../content/portfolio";
 import { resolvePublicAsset, validateContent } from "../lib/content-validation";
 
 const WIDTH = 1200;
@@ -9,16 +9,17 @@ const HEIGHT = 630;
 const publicRoot = path.resolve("public");
 const outputRoot = path.join(publicRoot, "og");
 const fontFile = path.join(publicRoot, "fonts", "Manrope-Variable.ttf");
+const displayFontFile = path.join(publicRoot, "fonts", "CormorantGaramond-Variable.ttf");
 
 function escapeXml(value: string): string {
   return value.replace(/[&<>"']/g, (character: string): string => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" })[character]!);
 }
 
-async function textLayer(text: string, size: number, color: string, left: number, top: number, width = 1064, maxHeight = 160, bold = false): Promise<OverlayOptions> {
+async function textLayer(text: string, size: number, color: string, left: number, top: number, width = 1064, maxHeight = 160, bold = false, display = false): Promise<OverlayOptions> {
   const rendered = await sharp({ text: {
     text: `<span foreground="${color}">${escapeXml(text)}</span>`,
-    font: `Manrope ${bold ? "Bold " : ""}${size}`,
-    fontfile: fontFile,
+    font: `${display ? "Cormorant Garamond" : "Manrope"} ${bold ? "Bold " : ""}${size}`,
+    fontfile: display ? displayFontFile : fontFile,
     width,
     wrap: "word-char",
     rgba: true,
@@ -40,20 +41,21 @@ async function coverCrop(photo: Photo): Promise<Buffer> {
 }
 
 async function generateHome(): Promise<void> {
-  const background = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}">
-    <rect width="1200" height="630" fill="#f1eee7"/>
-    <path d="M68 68H1132M68 535H1132" stroke="#cfcbc1"/>
-    <path d="M918 124H1132V338M946 152H1104V310M974 180H1076V282" fill="none" stroke="#aa9065" stroke-width="2"/>
-    <rect x="68" y="124" width="42" height="3" fill="#a08556"/>
+  const hero = getHero();
+  const background = await coverCrop({ ...hero, focalPoint: { x: 50, y: 82 } });
+  const shade = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${HEIGHT}">
+    <defs><radialGradient id="shade" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(160 60) scale(760 360)"><stop stop-color="#101412" stop-opacity=".88"/><stop offset=".6" stop-color="#101412" stop-opacity=".46"/><stop offset="1" stop-color="#101412" stop-opacity="0"/></radialGradient></defs>
+    <rect width="1200" height="630" fill="url(#shade)"/>
   </svg>`);
   const layers = await Promise.all([
-    textLayer("AUTOMOTIVE PHOTOGRAPHY", 20, "#625e55", 68, 153, 820, 32),
-    textLayer(site.name, 104, "#22241f", 62, 219, 1064, 153, true),
-    textLayer("A considered perspective.", 27, "#625e55", 68, 410, 850, 54),
-    textLayer(site.instagram.handle, 20, "#22241f", 68, 561, 900, 32),
-    textLayer("PORTFOLIO", 16, "#796b51", 1013, 565, 120, 28),
+    textLayer(site.name, 88, "#f4f1ea", 52, 40, 680, 112, false, true),
+    textLayer("AUTOMOTIVE PHOTOGRAPHY & FILM", 26, "#e9e2d6", 57, 142, 700, 36),
   ]);
-  await sharp(background).composite(layers).jpeg({ quality: 93, mozjpeg: true }).toFile(path.join(outputRoot, "home.jpg"));
+  const image = await sharp(background).composite([{ input: shade }, ...layers]).jpeg({ quality: 93, mozjpeg: true }).toBuffer();
+  await Promise.all([
+    writeFile(path.join(outputRoot, path.basename(homepageShare.image)), image),
+    writeFile(path.join(outputRoot, "home.jpg"), image),
+  ]);
 }
 
 async function generateShootImages(): Promise<void> {
@@ -72,7 +74,7 @@ async function generateShootImages(): Promise<void> {
         <path d="M68 329H110" stroke="#ceb184" stroke-width="3"/>
       </svg>`);
       const layers = await Promise.all([
-        textLayer("AUTOMOTIVE PHOTOGRAPHY", 18, "#f1eee7", 68, 63, 900, 28),
+        textLayer(shoot.videos?.length ? "AUTOMOTIVE PHOTOGRAPHY & FILM" : "AUTOMOTIVE PHOTOGRAPHY", 18, "#f1eee7", 68, 63, 900, 28),
         textLayer(shoot.title, 70, "#f1eee7", 64, 369, 1064, 146, true),
         textLayer(site.name, 22, "#f1eee7", 68, 569, 640, 34),
         textLayer(site.instagram.handle, 19, "#ddd4c3", 941, 571, 192, 34),
@@ -86,7 +88,8 @@ async function generateShootImages(): Promise<void> {
 const errors = await validateContent(site, shoots, publicRoot);
 if (errors.length > 0) throw new Error(`Cannot generate share images:\n${errors.join("\n")}`);
 await access(fontFile);
+await access(displayFontFile);
 await mkdir(outputRoot, { recursive: true });
 await generateHome();
 await generateShootImages();
-console.log("Generated /og/home.jpg (all share images are 1200x630).");
+console.log(`Generated ${homepageShare.image} (all share images are 1200x630).`);

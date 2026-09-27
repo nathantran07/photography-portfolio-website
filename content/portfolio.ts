@@ -61,7 +61,7 @@ export type SiteConfig = {
 export const site: SiteConfig = {
   name: "Nathan Tran",
   shortName: "Nate",
-  description: "Automotive photography by Nathan Tran. A considered perspective on cars, their details, and the moments around them.",
+  description: "Automotive photography and films by Nathan Tran. Hypercars, exceptional builds, and California’s car community.",
   instagram: { handle: "@natextran", url: "https://www.instagram.com/natextran/" },
   featuredSlugs: ["the-california-grand-tour-2026", "cars-n-copters-2025", "cars-n-copters-2024"],
   hero: { shootSlug: "the-california-grand-tour-2026", photoId: "cgt-0485" },
@@ -74,6 +74,12 @@ export const site: SiteConfig = {
     id: "nathan-tran-headshot", src: "/images/home/headshot.jpg", width: 784, height: 784,
     alt: "Nathan Tran in profile, wearing a black shirt against a warm sunset sky.",
   },
+};
+
+export const homepageShare = {
+  title: `${site.name} — Automotive Photography & Film`,
+  image: "/og/nathan-tran-photography-film.jpg",
+  alt: "McLaren Senna GTR photographed head-on, with Nathan Tran — Automotive Photography & Film branding.",
 };
 
 const californiaGrandTourPhotos: Photo[] = [

@@ -2,7 +2,7 @@
 
 A photography and film portfolio built with Next.js App Router, React, TypeScript, and Tailwind. Identity: Nathan Tran / Nate / [@natextran](https://www.instagram.com/natextran/).
 
-Live placeholder site: https://photography-portfolio-website-chi.vercel.app
+Live portfolio: https://natefilms.vercel.app
 
 Private repository: https://github.com/nathantran07/photography-portfolio-website
 
@@ -100,11 +100,14 @@ The About section keeps its numbered label aligned with Contact. Its heading and
 
 Every share image is a local 1200×630 JPEG generated at build time:
 
-- `/og/home.jpg`: dedicated Nathan Tran / Automotive Photography / @natextran artwork.
+- `/og/nathan-tran-photography-film.jpg`: the Senna GTR opening photograph with Cormorant Garamond branding and an Automotive Photography & Film label. Homepage metadata is centralized in `homepageShare` in `content/portfolio.ts`; the share crop is independent of the on-page hero crop.
+- `/og/home.jpg`: compatibility copy of the same image for previously shared links.
 - `/og/<slug>.jpg`: the shoot cover cropped at its focal point, with shoot title and branding.
 - To override a shoot image, add a finished 1200×630 JPG/PNG under `public/images/share/` and set `shoot.ogImage` to its `/images/share/...` path. Do not point overrides into generated `/og/` outputs; they do not exist on a clean clone.
 
 Run `npm run generate:og` to preview sharing changes during development. Link metadata includes absolute URLs, image dimensions, alt text, and Twitter large-image cards. Crawler images use generated files; all on-page photos use `next/image` with responsive sizes and AVIF/WebP negotiation.
+
+Share-image fonts are bundled under `public/fonts/` for consistent offline builds. The Cormorant Garamond TTF comes from [Google Fonts](https://github.com/google/fonts/tree/main/ofl/cormorantgaramond); its OFL license is included as `OFL-CormorantGaramond.txt`. Website font loading continues to use the existing Fontsource packages.
 
 ### Identity and contact
 
