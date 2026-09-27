@@ -8,6 +8,14 @@
 - Poster frames and mid-clip contact frames were inspected. Captions use visible details and car identities already established for the 2025 photos. Ferrari subvariants, the BMW model, Koenigsegg variant, and the edited Lamborghini variant are left unspecified. Aventador SVJ lettering is visible in the relevant clips; BAC Mono and the orange Toyota Supra are visually recognizable. No horsepower, chassis, provenance, or wheel-brand claims were added.
 - Technical references: [FFmpeg formats](https://ffmpeg.org/ffmpeg-formats.html), [native HTML video](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video), and the installed Next.js `docs/01-app/02-guides/videos.md`.
 
+## Nathan's caption corrections
+
+- `cnc-video-img-2021`: Nathan confirmed the passing order: Lamborghini Aventador, Lamborghini Huracan, then Porsche 911 GT3 RS. Caption and alt describe the complete sequence rather than just the Porsche.
+- `cnc-video-img-2053`: Nathan confirmed a Koenigsegg, Ford GT, McLaren Speedtail, then another Koenigsegg. The original Centenario identification was incorrect for this clip. Koenigsegg subvariants remain unspecified; other Centenario records are unaffected.
+- `cnc-video-img-2136`: Nathan confirmed **Lamborghini Aventador SV**; caption and alt now specify the trim.
+- `cnc-video-img-2220`: Nathan confirmed **Mk4 Toyota Supra** and suggested a possible Fast and Furious inspiration. Caption describes the visual resemblance only; official replica status, build intent, and screen use are not confirmed.
+- `cnc-video-img-2029` and `cnc-video-carsncops-3-1-prob4`: replaced literal question marks in caption text with apostrophes. These were stored text errors, not a viewer font issue. The same punctuation error was corrected in the 2024 photo captions `cnc24-2659` and `cnc24-2664`.
+
 ## Files and source hashes
 
 | Original | ID | MP4 | Duration | SHA-256 |

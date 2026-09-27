@@ -284,7 +284,7 @@ const carsNCoptersPhotos: Photo[] = [
     id: "cnc-2027", src: "/images/cars-n-copters-2025/helicopter-cockpit.jpg",
     width: 2400, height: 3200,
     alt: "Helicopter cockpit with two seats, flight instruments, and a control stick.",
-    caption: "The other cockpit at Cars 'N Copters: flight instruments and a cyclic control in place of a steering wheel.",
+    caption: "Inside the helicopter cockpit. Flight instruments and controls between the two seats.",
   },
   {
     id: "cnc-2036", src: "/images/cars-n-copters-2025/huracan-helicopter.jpg",
@@ -349,8 +349,8 @@ const carsNCoptersPhotos: Photo[] = [
   {
     id: "cnc-2314", src: "/images/cars-n-copters-2025/ferrari-488-spider-cockpit.jpg",
     width: 2400, height: 3200,
-    alt: "Ferrari 488 Spider cockpit with a red manettino switch and engine-start button on the wheel.",
-    caption: "Ferrari 488 Spider. The manettino and engine-start button sit right on the steering wheel.",
+    alt: "Ferrari 458 Spider cockpit with a red manettino switch and engine-start button on the wheel.",
+    caption: "Ferrari 458 Spider. The manettino and engine-start button sit right on the steering wheel.",
   },
   {
     id: "cnc-2126", src: "/images/cars-n-copters-2025/aventador-urus.jpg",
@@ -379,8 +379,8 @@ const carsNCoptersPhotos: Photo[] = [
   {
     id: "cnc-2135", src: "/images/cars-n-copters-2025/aventador-profile.jpg",
     width: 2400, height: 3200,
-    alt: "White Lamborghini Aventador viewed in profile against the beachfront.",
-    caption: "Lamborghini Aventador. The low roof and large side intake make the wedge profile work from any distance.",
+    alt: "White Lamborghini Aventador SV viewed in profile against the beachfront.",
+    caption: "Lamborghini Aventador SV. Red SV graphics break up the white bodywork above the rear arches.",
   },
   {
     id: "cnc-2140", src: "/images/cars-n-copters-2025/daytona-sp3-rear.jpg",
@@ -599,8 +599,8 @@ const carsNCoptersVideos: Video[] = [
     id: "cnc-video-img-2021", src: "/images/cars-n-copters-2025/video-posters/img-2021.jpg",
     videoSrc: "/videos/cars-n-copters-2025/img-2021.mp4", duration: 42.266667,
     width: 1080, height: 1920,
-    alt: "White Porsche 911 GT3 RS at the show.",
-    caption: "Porsche 911 GT3 RS. Wide rear arches beneath a fixed rear wing.",
+    alt: "Lamborghini Aventador and Huracan passing through the event lane, followed by a Porsche 911 GT3 RS.",
+    caption: "A Lamborghini Aventador leads, followed by a Huracan and then a Porsche 911 GT3 RS.",
   },
   {
     id: "cnc-video-img-2022", src: "/images/cars-n-copters-2025/video-posters/img-2022.jpg",
@@ -621,7 +621,7 @@ const carsNCoptersVideos: Video[] = [
     videoSrc: "/videos/cars-n-copters-2025/img-2029.mp4", duration: 11.966667,
     width: 1080, height: 1920,
     alt: "Front of a yellow Lamborghini Huracan beside a helicopter.",
-    caption: "Lamborghini Huracan. A low front view beneath the helicopter?s rotor.",
+    caption: "Lamborghini Huracan. A low front view beneath the helicopter's rotor.",
   },
   {
     id: "cnc-video-img-2030", src: "/images/cars-n-copters-2025/video-posters/img-2030.jpg",
@@ -641,8 +641,8 @@ const carsNCoptersVideos: Video[] = [
     id: "cnc-video-img-2053", src: "/images/cars-n-copters-2025/video-posters/img-2053.jpg",
     videoSrc: "/videos/cars-n-copters-2025/img-2053.mp4", duration: 26.966667,
     width: 1080, height: 1920,
-    alt: "Dark Lamborghini Centenario in the event lane.",
-    caption: "Lamborghini Centenario. Blue accents outline the low nose and front splitter.",
+    alt: "A Koenigsegg, Ford GT, McLaren Speedtail, and a second Koenigsegg passing in sequence.",
+    caption: "A Koenigsegg opens the procession, followed by a Ford GT, a McLaren Speedtail, and another Koenigsegg.",
   },
   {
     id: "cnc-video-img-2054", src: "/images/cars-n-copters-2025/video-posters/img-2054.jpg",
@@ -718,8 +718,8 @@ const carsNCoptersVideos: Video[] = [
     id: "cnc-video-img-2136", src: "/images/cars-n-copters-2025/video-posters/img-2136.jpg",
     videoSrc: "/videos/cars-n-copters-2025/img-2136.mp4", duration: 7.444,
     width: 1080, height: 1920,
-    alt: "White Lamborghini Aventador viewed in profile at the beachfront.",
-    caption: "Lamborghini Aventador. The wedge-shaped profile opens into a large intake behind the door.",
+    alt: "White Lamborghini Aventador SV viewed in profile at the beachfront.",
+    caption: "Lamborghini Aventador SV. The side profile shows the deep intake behind the door and fixed rear wing.",
   },
   {
     id: "cnc-video-img-2201", src: "/images/cars-n-copters-2025/video-posters/img-2201.jpg",
@@ -732,8 +732,8 @@ const carsNCoptersVideos: Video[] = [
     id: "cnc-video-img-2220", src: "/images/cars-n-copters-2025/video-posters/img-2220.jpg",
     videoSrc: "/videos/cars-n-copters-2025/img-2220.mp4", duration: 16.34,
     width: 1080, height: 1920,
-    alt: "Orange Toyota Supra with side graphics at the show.",
-    caption: "Toyota Supra. Orange paint and sweeping side graphics give this build a familiar movie-car look.",
+    alt: "Orange Mk4 Toyota Supra with sweeping side graphics at the show.",
+    caption: "Mk4 Toyota Supra. Orange paint and sweeping side graphics recall the Supra from The Fast and the Furious.",
   },
   {
     id: "cnc-video-lambo-3-1-prob4", src: "/images/cars-n-copters-2025/video-posters/lambo-3-1-prob4.jpg",
@@ -746,8 +746,8 @@ const carsNCoptersVideos: Video[] = [
     id: "cnc-video-carsncops-3-1-prob4", src: "/images/cars-n-copters-2025/video-posters/carsncops-3-1-prob4.jpg",
     videoSrc: "/videos/cars-n-copters-2025/carsncops-3-1-prob4.mp4", duration: 30.458,
     width: 1080, height: 1920,
-    alt: "Edited highlights of supercars at Cars N Copters 2025.",
-    caption: "Cars ?N Copters 2025. A short edit from the beachfront lineup.",
+    alt: "Edited highlights of supercars at Cars 'N Copters 2025.",
+    caption: "Cars 'N Copters 2025. A short edit from the beachfront lineup.",
   },
 ];
 
@@ -756,7 +756,7 @@ const carsNCopters2024Photos: Photo[] = [
     id: "cnc24-2659", src: "/images/cars-n-copters-2024/huayra-bc-front.jpg",
     width: 2400, height: 3200,
     alt: "White Pagani Huayra BC viewed from the front, with a blue center stripe and exposed-weave hood.",
-    caption: "Pagani Huayra BC. The initials honor Benny Caiola, Pagani?s first customer.",
+    caption: "Pagani Huayra BC. The initials honor Benny Caiola, Pagani's first customer.",
     focalPoint: { x: 50, y: 67 },
   },
   {
@@ -774,8 +774,8 @@ const carsNCopters2024Photos: Photo[] = [
   {
     id: "cnc24-1289", src: "/images/cars-n-copters-2024/mclaren-rear-lineup.jpg",
     width: 2400, height: 3200,
-    alt: "A row of McLarens viewed from behind, showing raised rear wings.",
-    caption: "McLaren rear wings, lined up along the beachfront. A view of how much of each tail is given over to aero.",
+    alt: "Rear view along a lineup of two Lamborghini Aventador SVJs, a blue McLaren, and a Ferrari.",
+    caption: "Two Lamborghini Aventador SVJs lead the lineup, their fixed rear wings ahead of a blue McLaren and a Ferrari.",
   },
   {
     id: "cnc24-1355", src: "/images/cars-n-copters-2024/mclaren-spider-tails.jpg",
@@ -808,28 +808,22 @@ const carsNCopters2024Photos: Photo[] = [
     caption: "Pagani Huayra. A closer look at the front wheel, small mirror stalk, and sculpted fender.",
   },
   {
-    id: "cnc24-2664", src: "/images/cars-n-copters-2024/ferrari-458-spider-cockpit.jpg",
-    width: 2400, height: 3200,
-    alt: "Ferrari 458 Spider cockpit with a red manettino dial and engine-start button on the steering wheel.",
-    caption: "Ferrari 458 Spider. The manettino and engine-start button sit on the wheel, within reach of the driver?s thumbs.",
-  },
-  {
     id: "cnc24-3269", src: "/images/cars-n-copters-2024/mclaren-cockpit.jpg",
     width: 2400, height: 3200,
-    alt: "McLaren cockpit with turquoise trim on the steering wheel and seats.",
-    caption: "McLaren. Turquoise accents carry from the steering-wheel center marker into the seats and console.",
+    alt: "McLaren 765LT cockpit with turquoise trim and exposed carbon-fiber bodywork around the door opening.",
+    caption: "McLaren 765LT with fully exposed carbon-fiber bodywork. Turquoise accents continue through the cockpit.",
   },
   {
     id: "cnc24-3271", src: "/images/cars-n-copters-2024/liberty-walk-mclaren.jpg",
     width: 2400, height: 3200,
     alt: "Purple McLaren 720S with widened arches and Liberty Walk lettering on the rear wing.",
-    caption: "McLaren 720S with Liberty Walk bodywork. Widened arches and a deep front splitter give it a very different stance.",
+    caption: "McLaren 720S with Liberty Walk bodywork. A vented hood, widened arches, and a deep splitter reshape the front end.",
   },
   {
     id: "cnc24-3309", src: "/images/cars-n-copters-2024/mclaren-diablo-pair.jpg",
     width: 2400, height: 3200,
-    alt: "Dark McLaren Spider with turquoise accents beside a yellow Lamborghini Diablo.",
-    caption: "McLaren Spider beside a Lamborghini Diablo. Two generations of mid-engined design, side by side.",
+    alt: "Exposed-carbon McLaren 765LT Spider with turquoise accents beside a yellow Lamborghini Murcielago.",
+    caption: "McLaren 765LT Spider beside a Lamborghini Murcielago. Exposed carbon and turquoise alongside bright yellow.",
   },
 ];
 
