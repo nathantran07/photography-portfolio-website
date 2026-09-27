@@ -1,5 +1,5 @@
 import { Fragment, type CSSProperties, type JSX } from "react";
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowIcon, EmailIcon, ExternalIcon, InstagramIcon } from "@/components/icons";
 import { PhotoFrame } from "@/components/photo-frame";
@@ -10,7 +10,6 @@ import { getCover, getHero, getShoot, homepageShare, isPlaceholderShoot, site } 
 import { pageMetadata } from "@/lib/page-metadata";
 
 export const metadata: Metadata = pageMetadata({ title: homepageShare.title, description: site.description, path: "/", image: homepageShare.image, imageAlt: homepageShare.alt });
-export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export default function Home(): JSX.Element {
   const featured = site.featuredSlugs.map((slug) => getShoot(slug)).filter((shoot) => shoot !== undefined);

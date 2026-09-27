@@ -17,6 +17,9 @@
 html { --anchor-offset: calc(110px + env(safe-area-inset-top, 0px)); background-color: var(--bg); scroll-behavior: smooth; scroll-padding-top: var(--anchor-offset); }
 body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 14px; -webkit-font-smoothing: antialiased; }
 body:has(dialog[open]) { overflow: hidden; }
+html:has(.photo-viewer[open]) { overflow: hidden; overscroll-behavior: none; }
+/* Safari can reveal content beyond a native dialog's backdrop under its controls. */
+body:has(.photo-viewer[open]) > * { visibility: hidden; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { font: inherit; color: inherit; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
@@ -214,14 +217,14 @@ body:has(dialog[open]) .scroll-to-top { opacity: 0; visibility: hidden; pointer-
 .gallery-trigger .placeholder-mark { padding-inline: 12px; text-align: center; font-size: 9px; letter-spacing: .1em; }
 .enlarge-label { position: absolute; right: 12px; bottom: 12px; width: 36px; height: 36px; border: 1px solid rgb(255 255 255 / 30%); background: rgb(22 24 22 / 70%); color: #fff; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 180ms; }
 .gallery-trigger:hover .enlarge-label, .gallery-trigger:focus-visible .enlarge-label { opacity: 1; }
-.photo-viewer { inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 24px 48px; border: 0; background: var(--bg); color: var(--fg); }
-.photo-viewer[open] { display: flex; flex-direction: column; gap: 20px; }
-.photo-viewer::backdrop { background: rgb(0 0 0 / 80%); }
+.photo-viewer { --viewer-pad-block: 24px; --viewer-pad-inline: 48px; position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: max(var(--viewer-pad-block), env(safe-area-inset-top, 0px)) max(var(--viewer-pad-inline), env(safe-area-inset-right, 0px)) max(var(--viewer-pad-block), env(safe-area-inset-bottom, 0px)) max(var(--viewer-pad-inline), env(safe-area-inset-left, 0px)); border: 0; background: var(--bg); color: var(--fg); overflow: hidden; overscroll-behavior: none; touch-action: pinch-zoom; }
+.photo-viewer[open] { display: flex; flex-direction: column; gap: 20px; visibility: visible; }
+.photo-viewer::backdrop { background: var(--bg); }
 .viewer-top { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-shrink: 0; }
 .viewer-identity { min-width: 0; }
 .viewer-identity > .eyebrow { color: var(--muted); font-size: 9px; }
 .viewer-top h2 { font: 500 13px var(--font-body); margin: 6px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.viewer-stage { position: relative; flex: 1; min-height: 80px; touch-action: pan-y pinch-zoom; }
+.viewer-stage { position: relative; flex: 1; min-height: 0; touch-action: pinch-zoom; }
 .viewer-image { object-fit: contain; }
 .video-trigger { cursor: pointer; }
 .gallery-item#films { scroll-margin-top: 100px; }
@@ -232,7 +235,7 @@ body:has(dialog[open]) .scroll-to-top { opacity: 0; visibility: hidden; pointer-
 .video-error { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--bg); color: var(--fg); }
 .video-error p { margin: 0; }
 .viewer-bottom { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 28px; flex-shrink: 0; border-top: 1px solid var(--line); padding-top: 14px; }
-.viewer-caption { font-size: 11px; color: var(--muted); max-width: 54ch; max-height: 5.5em; overflow: auto; margin: 0; }
+.viewer-caption { font-size: 11px; color: var(--muted); max-width: 54ch; max-height: 5.5em; overflow: auto; overscroll-behavior: contain; touch-action: pan-y pinch-zoom; margin: 0; }
 .viewer-controls { display: flex; gap: 16px; align-items: center; flex-shrink: 0; }
 .viewer-count { font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; letter-spacing: .12em; }
 .viewer-count > span { color: var(--gold); margin-inline: 8px; }
@@ -268,7 +271,7 @@ body:has(dialog[open]) .scroll-to-top { opacity: 0; visibility: hidden; pointer-
   .shoot-cover-wrap::after { inset: 9px; } .shoot-cover-content { min-height: clamp(440px, calc(100svh - 190px), 660px); padding: 64px 24px 40px; } .shoot-title { font-size: clamp(46px, 10vw, 72px); } .shoot-cover .placeholder-mark { padding-top: 28%; font-size: 9px; } .shoot-details { font-size: 10px; } .shoot-enter { margin-top: 24px; font-size: 9px; gap: 16px; }
   .shoot-description-row { flex-direction: column; gap: 14px; padding-block: 22px; } .shoot-description { max-width: none; font-size: 11px; }
   .shoot-gallery { padding-block: 36px 64px; } .gallery-row { display: grid; grid-template-columns: 1fr; } .gallery-heading .section-count { font-size: 9px; } .next-shoot { padding-bottom: 64px; }
-  .photo-viewer { padding: 16px; } .photo-viewer[open] { gap: 14px; } .viewer-bottom { display: flex; flex-direction: column; gap: 10px; padding-top: 10px; } .viewer-caption { font-size: 10px; text-align: center; max-height: 3.8em; } .viewer-controls { order: -1; gap: 24px; } .viewer-help { display: none; }
+  .photo-viewer { --viewer-pad-block: 16px; --viewer-pad-inline: 16px; } .photo-viewer[open] { gap: 14px; } .viewer-bottom { display: flex; flex-direction: column; gap: 10px; padding-top: 10px; } .viewer-caption { font-size: 10px; text-align: center; max-height: 3.8em; } .viewer-controls { order: -1; gap: 24px; } .viewer-help { display: none; }
 }
 @media (pointer: coarse) { .viewer-keyboard-help { display: none; } .viewer-touch-help { display: inline; } }
 @media (max-width: 370px) { .section-title { font-size: 46px; } .eyebrow { font-size: 9px; } }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type JSX, type TouchEvent } from "react";
+import { useLayoutEffect, useRef, useState, type JSX, type TouchEvent } from "react";
 import { PhotoFrame } from "@/components/photo-frame";
 import { PortfolioImage } from "@/components/portfolio-image";
 import { VideoPlayer } from "@/components/video-player";
@@ -21,9 +21,26 @@ export function Gallery({ photos, title }: { photos: GalleryItem[]; title: strin
   const hasVideos = photos.some(isVideo);
   const firstVideoIndex = photos.findIndex(isVideo);
 
-  useEffect((): void => {
-    if (isOpen && !dialog.current?.open) dialog.current?.showModal();
-    if (!isOpen && dialog.current?.open) dialog.current?.close();
+  useLayoutEffect((): (() => void) | undefined => {
+    const viewer = dialog.current;
+    if (!isOpen || !viewer) return;
+    const { scrollX, scrollY } = window;
+    const pathname = window.location.pathname;
+    const body = document.body;
+    const previousStyle = { position: body.style.position, top: body.style.top, left: body.style.left, width: body.style.width };
+
+    // Body overflow alone does not stop scrolling with collapsed iOS Safari controls.
+    Object.assign(body.style, { position: "fixed", top: `${-scrollY}px`, left: `${-scrollX}px`, width: "100%" });
+    viewer.showModal();
+
+    return (): void => {
+      if (viewer.open) viewer.close();
+      Object.assign(body.style, previousStyle);
+      if (window.location.pathname === pathname) {
+        window.scrollTo({ left: scrollX, top: scrollY, behavior: "instant" });
+        if (opener.current?.isConnected) opener.current.focus({ preventScroll: true });
+      }
+    };
   }, [isOpen]);
 
   function close(): void { dialog.current?.close(); }
@@ -59,7 +76,7 @@ export function Gallery({ photos, title }: { photos: GalleryItem[]; title: strin
         </figure>)}
       </div>)}
     </div>
-    <dialog ref={dialog} className="photo-viewer" aria-labelledby="viewer-title" onClose={(): void => { setIsOpen(false); swipeStart.current = null; opener.current?.focus(); }} onClick={(event): void => { if (event.target === event.currentTarget) close(); }} onKeyDown={(event): void => {
+    <dialog ref={dialog} className="photo-viewer" aria-labelledby="viewer-title" onClose={(): void => { setIsOpen(false); swipeStart.current = null; }} onClick={(event): void => { if (event.target === event.currentTarget) close(); }} onKeyDown={(event): void => {
       if (event.key === "Tab") {
         const controls = event.currentTarget.querySelectorAll<HTMLElement>("button:not([disabled]), video[controls]");
         const first = controls[0];

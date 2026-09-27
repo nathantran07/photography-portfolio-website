@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { JSX, ReactNode } from "react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
@@ -6,6 +6,8 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { homepageShare, site } from "@/content/portfolio";
 import { getSiteUrl, isIndexable } from "@/lib/site-url";
 import "./globals.css";
+
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
