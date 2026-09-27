@@ -2,16 +2,29 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type JSX } from "react";
+import { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export function Header(): JSX.Element {
   const [open, setOpen] = useState(false);
   const [overHero, setOverHero] = useState(true);
+  const [mobileOverlay, setMobileOverlay] = useState(false);
   const pathname = usePathname();
   const SectionLink = pathname === "/" ? "a" : Link;
   const header = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
+  const focusedControlIndex = useRef(-1);
+  const attachHeader = useCallback((node: HTMLElement | null): void => {
+    const controls = header.current?.querySelectorAll<HTMLElement>("a[href], button");
+    if (!node && controls) {
+      focusedControlIndex.current = Array.from(controls).findIndex((control): boolean => control === document.activeElement);
+    }
+    header.current = node;
+    if (node && focusedControlIndex.current >= 0) {
+      node.querySelectorAll<HTMLElement>("a[href], button")[focusedControlIndex.current]?.focus({ preventScroll: true });
+      focusedControlIndex.current = -1;
+    }
+  }, []);
 
   useEffect((): (() => void) | undefined => {
     if (pathname !== "/") return;
@@ -23,6 +36,7 @@ export function Header(): JSX.Element {
     function updateHeader(): void {
       // On touch screens, avoid a transparent fixed header over the mixed hero/content state.
       setOverHero(mobileHeader.matches ? window.scrollY <= 8 : heroIntersects);
+      setMobileOverlay(mobileHeader.matches && window.scrollY <= 8);
     }
     function onScroll(): void {
       if (mobileHeader.matches) updateHeader();
@@ -43,7 +57,9 @@ export function Header(): JSX.Element {
   }, [pathname]);
 
   return (
-    <header ref={header} className={`site-header${pathname === "/" ? " home-header" : ""}${pathname === "/" && overHero ? " over-hero" : ""}`} onKeyDown={(event): void => { if (event.key === "Escape" && open) { setOpen(false); menuButton.current?.focus(); } }}>
+    // WebKit can retain the old fixed header's tint while its renderer survives.
+    // Replace that node at the mobile hero boundary; keep menu state and focus.
+    <header key={pathname === "/" && mobileOverlay ? "hero" : "surface"} ref={attachHeader} className={`site-header${pathname === "/" ? " home-header" : ""}${pathname === "/" && overHero ? " over-hero" : ""}`} onKeyDown={(event): void => { if (event.key === "Escape" && open) { setOpen(false); menuButton.current?.focus(); } }}>
       <div className="header-inner shell">
         <Link className="wordmark" href="/" onClick={(): void => setOpen(false)} aria-label="Nathan Tran — home">Nathan Tran<span className="wordmark-dot" aria-hidden="true">.</span></Link>
         <div className="header-actions">
