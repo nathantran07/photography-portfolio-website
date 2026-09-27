@@ -1,6 +1,6 @@
 import { Fragment, type CSSProperties, type JSX } from "react";
 import type { Metadata } from "next";
-import Link from "next/link";
+import { CollectionLink, RestoreCollectionPosition } from "@/components/collection-navigation";
 import { ArrowIcon, EmailIcon, ExternalIcon, InstagramIcon } from "@/components/icons";
 import { PhotoFrame } from "@/components/photo-frame";
 import { PortfolioImage } from "@/components/portfolio-image";
@@ -16,6 +16,7 @@ export default function Home(): JSX.Element {
   const hero = getHero();
   return (
     <main id="main" tabIndex={-1}>
+      <RestoreCollectionPosition />
       <section className="home-hero" aria-labelledby="hero-heading" style={{ "--hero-position": `${hero.focalPoint?.x ?? 50}% ${hero.focalPoint?.y ?? 50}%` } as CSSProperties}>
         <PortfolioImage src={hero.src} alt={hero.alt} fill sizes={`max(100vw, ${(100 * hero.width / hero.height).toFixed(2)}svh)`} preload quality={85} className="home-hero-image" />
         <div className="home-hero-content entrance">
@@ -29,10 +30,10 @@ export default function Home(): JSX.Element {
         <div className="section-top"><span className="eyebrow">01 / Work</span><span className="section-count">{String(featured.length).padStart(2, "0")} collections</span></div>
         <div className="section-heading-row"><h2 className="display section-title" id="work-heading">A few things<br /><em>worth a closer look.</em></h2><p className="section-description">A collection of perspectives.<br />Each one, its own story.</p></div>
         <div className="projects-grid">
-          {featured.map((shoot, index) => <Fragment key={shoot.slug}><Link href={`/work/${shoot.slug}`} className={`project-card project-${index + 1}`} aria-label={`View ${shoot.title}${isPlaceholderShoot(shoot) ? " — example collection" : ""}`}>
+          {featured.map((shoot, index) => <Fragment key={shoot.slug}><CollectionLink slug={shoot.slug} className={`project-card project-${index + 1}`} aria-label={`View ${shoot.title}${isPlaceholderShoot(shoot) ? " — example collection" : ""}`}>
             <PhotoFrame photo={getCover(shoot)} sizes={index === 0 ? "(max-width: 760px) calc(100vw - 40px), (max-width: 1000px) calc(100vw - 72px), (max-width: 1440px) calc(100vw - 112px), 1328px" : "(max-width: 760px) calc(100vw - 40px), (max-width: 1000px) calc(50vw - 56px), (max-width: 1440px) calc(50vw - 84px), 636px"} className="project-frame" label={String(index + 1).padStart(2, "0")} />
             <div className="project-caption"><div><span className="eyebrow project-category">{isPlaceholderShoot(shoot) ? "Example collection" : shoot.videos?.length ? "Photography & film" : "Photographic collection"}</span><h3 className="display project-title">{shoot.title}</h3></div><span className="project-arrow"><ExternalIcon /></span></div>
-          </Link>{index === 0 && <FilmStrip projects={filmProjects} />}</Fragment>)}
+          </CollectionLink>{index === 0 && <FilmStrip projects={filmProjects} />}</Fragment>)}
         </div>
       </section>
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { formatShootDate, gallerySummary, getCover, getGalleryItems, getShoot, isPlaceholderShoot, shoots, site } from "@/content/portfolio";
 import { Gallery } from "@/components/gallery";
+import { BackToWork } from "@/components/collection-navigation";
 import { PhotoFrame } from "@/components/photo-frame";
 import { ArrowIcon } from "@/components/icons";
 import { pageMetadata } from "@/lib/page-metadata";
@@ -31,7 +32,7 @@ export default async function ShootPage({ params }: ShootPageProps): Promise<JSX
 
   return <main id="main" className="shoot-page" tabIndex={-1}>
     <section className="shell shoot-intro" aria-labelledby="shoot-heading">
-      <div className="shoot-breadcrumb"><Link className="text-link back-link" href="/#work"><ArrowIcon /> Work</Link><span className="eyebrow">Collection {String(index + 1).padStart(2, "0")}</span></div>
+      <div className="shoot-breadcrumb"><BackToWork slug={shoot.slug} /><span className="eyebrow">Collection {String(index + 1).padStart(2, "0")}</span></div>
       <div className="shoot-cover-wrap entrance">
         <PhotoFrame photo={getCover(shoot)} preload sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1000px) calc(100vw - 72px), (max-width: 1440px) calc(100vw - 112px), 1328px" className="shoot-cover" />
         <div className="shoot-cover-content">

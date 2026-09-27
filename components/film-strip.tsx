@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type JSX } from "react";
-import Link from "next/link";
+import { CollectionLink } from "@/components/collection-navigation";
 import type { FilmProject } from "@/content/films";
 import { PortfolioImage } from "@/components/portfolio-image";
 import { ArrowIcon, ExternalIcon, PlayIcon } from "@/components/icons";
@@ -43,7 +43,7 @@ function FilmCard({ project, onPlay }: { project: FilmProject; onPlay: (player: 
     <div className="film-caption"><h3 className="display">{project.title}</h3></div>
     <p className="film-description">{project.description}</p>
     <p className="film-source" id={`${project.id}-credit`}>{project.role === "Editing" ? "Edited" : "Filmed & edited"} by Nathan Tran{project.footageCredit && <><br />{project.footageCredit}</>}</p>
-    <div className="film-footer">{project.collection && <Link className="film-collection" href={`/work/${project.collection.slug}`}>From {project.collection.title} <ExternalIcon /></Link>}</div>
+    <div className="film-footer">{project.collection && <CollectionLink className="film-collection" id={`film-collection-${project.id}`} slug={project.collection.slug}>From {project.collection.title} <ExternalIcon /></CollectionLink>}</div>
   </article>;
 }
 
