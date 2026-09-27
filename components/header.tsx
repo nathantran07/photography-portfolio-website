@@ -9,6 +9,7 @@ export function Header(): JSX.Element {
   const [open, setOpen] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
   const pathname = usePathname();
+  const SectionLink = pathname === "/" ? "a" : Link;
   const header = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
 
@@ -27,9 +28,9 @@ export function Header(): JSX.Element {
         <Link className="wordmark" href="/" onClick={(): void => setOpen(false)} aria-label="Nathan Tran — home">Nathan Tran<span className="wordmark-dot" aria-hidden="true">.</span></Link>
         <div className="header-actions">
           <nav className={`main-nav${open ? " is-open" : ""}`} id="main-navigation" aria-label="Main navigation">
-            <Link href="/#work" onClick={(): void => setOpen(false)}>Work</Link>
-            <Link href="/#about" onClick={(): void => setOpen(false)}>About</Link>
-            <Link href="/#contact" onClick={(): void => setOpen(false)}>Get in touch <span aria-hidden="true">↗</span></Link>
+            <SectionLink href="/#work" onClick={(): void => setOpen(false)}>Work</SectionLink>
+            <SectionLink href="/#about" onClick={(): void => setOpen(false)}>About</SectionLink>
+            <SectionLink href="/#contact" onClick={(): void => setOpen(false)}>Get in touch <span aria-hidden="true">↗</span></SectionLink>
           </nav>
           <span className="nav-divider" aria-hidden="true" />
           <ThemeToggle />
