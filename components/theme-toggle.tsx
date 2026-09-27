@@ -5,12 +5,18 @@ import { useSyncExternalStore, type JSX } from "react";
 const themeEvent = "portfolio-theme-change";
 let sessionChoice: "light" | "dark" | null = null;
 
+function applyTheme(theme: "light" | "dark"): void {
+  document.documentElement.dataset.theme = theme;
+  const color = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute("content", color);
+}
+
 function subscribe(callback: () => void): () => void {
   function syncPreference(): void {
     let saved: string | null = null;
     try { saved = localStorage.getItem("portfolio-theme"); } catch { /* Storage may be unavailable in private contexts. */ }
     const chosen = sessionChoice ?? (saved === "light" || saved === "dark" ? saved : null);
-    document.documentElement.dataset.theme = chosen ?? "light";
+    applyTheme(chosen ?? "light");
     callback();
   }
   function onStorage(event: StorageEvent): void {
@@ -35,7 +41,7 @@ export function ThemeToggle(): JSX.Element {
   function toggle(): void {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     sessionChoice = next;
-    document.documentElement.dataset.theme = next;
+    applyTheme(next);
     try { localStorage.setItem("portfolio-theme", next); } catch { /* The current session still keeps its selected theme. */ }
     window.dispatchEvent(new Event(themeEvent));
   }

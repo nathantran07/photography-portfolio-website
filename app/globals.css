@@ -14,7 +14,7 @@
 :root[data-theme="dark"] { --bg: #161816; --surface: #1c1f1b; --fg: #ece8df; --muted: #a4a599; --gold: #c9ad7c; --line: #35382f; --glass: rgb(22 24 22 / 88%); --halo: rgb(201 173 124 / 5%); color-scheme: dark; }
 @theme inline { --color-background: var(--bg); --color-foreground: var(--fg); --font-sans: var(--font-body); }
 * { box-sizing: border-box; }
-html { --anchor-offset: 110px; scroll-behavior: smooth; scroll-padding-top: var(--anchor-offset); }
+html { --anchor-offset: 110px; background-color: var(--bg); scroll-behavior: smooth; scroll-padding-top: var(--anchor-offset); }
 body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 14px; -webkit-font-smoothing: antialiased; }
 body:has(dialog[open]) { overflow: hidden; }
 button, a { -webkit-tap-highlight-color: transparent; }

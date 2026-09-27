@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: homepageShare.title, description: site.description, images: [{ url: homepageShare.image, alt: homepageShare.alt }] },
 };
 
-const themeScript = `(function(){var t;try{t=localStorage.getItem('portfolio-theme')}catch(e){}document.documentElement.dataset.theme=t==='light'||t==='dark'?t:'light'})()`;
+const themeScript = `(function(){var t;try{t=localStorage.getItem('portfolio-theme')}catch(e){}t=t==='dark'?'dark':'light';document.documentElement.dataset.theme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==='dark'?'#161816':'#f4f1ea'})()`;
 
 export default function RootLayout({ children }: { children: ReactNode }): JSX.Element {
-  return <html lang="en" suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head><body><a className="skip-link" href="#main">Skip to content</a><Header />{children}<Footer /></body></html>;
+  return <html lang="en" suppressHydrationWarning><head><meta name="theme-color" content="#f4f1ea" suppressHydrationWarning /><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head><body><a className="skip-link" href="#main">Skip to content</a><Header />{children}<Footer /></body></html>;
 }
