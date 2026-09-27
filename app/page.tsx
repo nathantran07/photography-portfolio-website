@@ -1,7 +1,7 @@
 import { Fragment, type CSSProperties, type JSX } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowIcon, ExternalIcon } from "@/components/icons";
+import { ArrowIcon, EmailIcon, ExternalIcon, InstagramIcon } from "@/components/icons";
 import { PhotoFrame } from "@/components/photo-frame";
 import { PortfolioImage } from "@/components/portfolio-image";
 import { FilmStrip } from "@/components/film-strip";
@@ -46,7 +46,12 @@ export default function Home(): JSX.Element {
         </div>
       </div></section>
 
-      <section className="contact-section shell section-space" id="contact" aria-labelledby="contact-heading"><span className="eyebrow">03 / A conversation starts here</span><div className="contact-layout"><h2 className="display contact-title" id="contact-heading">Something<br /><em>in mind?</em></h2><div className="contact-copy"><p>A car, a gathering, a different perspective.<br />I’d love to hear about it.</p><a className="contact-link" href={site.instagram.url} target="_blank" rel="noopener noreferrer"><span>{site.instagram.handle}</span><ExternalIcon /></a>{site.email && <a className="text-link email-link" href={`mailto:${site.email}`}>{site.email} <ArrowIcon /></a>}<span className="contact-caption">{site.email ? "Email or Instagram. Either works." : "Let’s start on Instagram."}</span></div></div></section>
+      <section className="contact-section shell section-space" id="contact" aria-labelledby="contact-heading"><span className="eyebrow">03 / A conversation starts here</span><div className="contact-layout"><h2 className="display contact-title" id="contact-heading">Something<br /><em>in mind?</em></h2><div className="contact-copy"><p>A car, a gathering, a different perspective.<br />I’d love to hear about it.</p>
+        <div className="contact-links">
+          {site.email && <a className="contact-link" href={`mailto:${site.email}`} aria-label={`Email Nathan Tran at ${site.email}`}><span className="contact-icon"><EmailIcon /></span><span className="contact-address">{site.email}</span><ArrowIcon className="contact-arrow" /></a>}
+          <a className="contact-link" href={site.instagram.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${site.instagram.handle} on Instagram (opens in a new tab)`}><span className="contact-icon"><InstagramIcon /></span><span className="contact-address">{site.instagram.handle}</span><ExternalIcon className="contact-arrow" /></a>
+        </div>
+      </div></div></section>
     </main>
   );
 }

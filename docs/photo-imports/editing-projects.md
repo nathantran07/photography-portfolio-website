@@ -57,3 +57,13 @@ Required checks: lint, typecheck, build/content validation; manual desktop/mobil
 - Local ignored `photos+videos/edits/{first-motors,randoms,whistlindiesel}/credits.txt:1-7`: correct attribution and duplicate handling. Original media preserved.
 
 Local review limitations: real iOS/Safari playback and the network-error retry path were not exercised. Original source links for the editing-only footage remain unspecified. Prior uncommitted gallery-curation notes in `docs/photo-imports/cars-n-copters-2024.md` and `docs/photo-imports/cars-n-copters-2025-videos.md` are retained.
+
+## Mobile row and description refinement
+
+The homepage now uses a horizontal scroll-snap film row at widths up to 760px, with a next-card peek, previous/next buttons, and a position counter. Desktop keeps the four-card grid; tablet keeps two columns above 760px. Native touch scrolling remains available. No autoplay or additional video downloads were introduced. Arrow navigation pauses playback and honors reduced motion; scrolling a video fully outside the row also pauses it.
+
+Each project now has a required, short public description. Every card spells out Nathan's role as Edited by Nathan Tran or Filmed & edited by Nathan Tran. Known footage credits remain visible: First Motors for the Jesko edit and WhistlinDiesel specifically for the Ferrari opening. The unresolved Rolls-Royce and BMW sources remain recorded above and in the source captions; no creator is guessed and no filming credit is assigned to Nathan. The Rolls-Royce card retains A short Rolls-Royce edit as its description.
+
+The Huracan card links to Cars 'N Copters 2025 using the existing shoot metadata. Validation rejects a missing collection, a mismatched collection title, or a collection that does not contain the referenced film. Blank descriptions and empty explicitly supplied footage credits are also rejected.
+
+Verification for this refinement: lint, typecheck, build, and diff whitespace checks passed. One-off in-memory invalid records verified the five rejection cases above without modifying source records. Manual Edge checks at 375px confirmed native horizontal scrolling, next/previous controls, first/last disabled states, keyboard activation, position updates, one-click playback, pausing when using an arrow, and the Huracan collection destination. The film section measured 751px tall instead of 2689px. At 768px and 1440px, the two/four-column grids remained intact; no page overflow at any checked width. Both themes reviewed. Physical touchscreen/Safari and reduced-motion emulation were not exercised; reduced-motion handling is implemented through the existing browser preference.

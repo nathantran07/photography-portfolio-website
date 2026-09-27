@@ -174,8 +174,21 @@ export async function validateContent(site: unknown, shoots: unknown, publicRoot
   else for (const [index, film] of films.entries()) {
     const location = `films[${index}]`;
     if (!isRecord(film)) { fail(location, "must be an object"); continue; }
-    for (const field of ["id", "title", "footageCredit"] as const) {
+    for (const field of ["id", "title", "description"] as const) {
       if (!isText(film[field])) fail(`${location}.${field}`, "must be a non-empty string");
+    }
+    if (film.footageCredit !== undefined && !isText(film.footageCredit)) fail(`${location}.footageCredit`, "must be a non-empty string when supplied");
+    if (film.collection !== undefined) {
+      if (!isRecord(film.collection)) fail(`${location}.collection`, "must contain a shoot slug and title");
+      else {
+        const collection = film.collection;
+        const shoot = shoots.find((entry: unknown): boolean => isRecord(entry) && entry.slug === collection.slug);
+        if (!isRecord(shoot)) fail(`${location}.collection.slug`, "must resolve to an existing shoot");
+        else {
+          if (collection.title !== shoot.title) fail(`${location}.collection.title`, "must match the shoot title");
+          if (!isRecord(film.video) || !Array.isArray(shoot.videos) || !shoot.videos.some((video: unknown): boolean => isRecord(video) && isRecord(film.video) && video.id === film.video.id)) fail(`${location}.collection`, "must reference a shoot containing this film");
+        }
+      }
     }
     if (isText(film.id)) {
       if (filmIds.has(film.id)) fail(`${location}.id`, "duplicate film project ID");
